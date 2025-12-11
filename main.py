@@ -28,6 +28,8 @@ async def on_message(message):
 @bot.event
 async def on_ready():
     print(f"Bot is ready! Logged in as {bot.user}")
+    from QOTD import scheduler
+    scheduler.start_qotdscheduler(bot)
 
 # Entry point
 if __name__ == "__main__":
