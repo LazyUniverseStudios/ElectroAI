@@ -11,13 +11,13 @@ bot = commands.Bot(
     case_insensitive=CASE_INSENSITIVE
 )
 
-from Listeners import boosts
-from Listeners import joins
-from Listeners import leaves
+from Listeners import boosts_listener
+from Listeners import joins_listener
+from Listeners import leaves_listener
 
-@bot.add_listener(boosts.on_message)
-@bot.add_listener(joins.on_member_join)
-@bot.add_listener(leaves.on_member_remove)
+@bot.add_listener(boosts_listener.on_message)
+@bot.add_listener(joins_listener.on_member_join)
+@bot.add_listener(leaves_listener.on_member_remove)
 
 def main():
     try:
