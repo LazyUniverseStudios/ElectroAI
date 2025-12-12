@@ -11,6 +11,14 @@ bot = commands.Bot(
     case_insensitive=CASE_INSENSITIVE
 )
 
+from Listeners import boosts
+from Listeners import joins
+from Listeners import leaves
+
+@bot.add_listener(boosts.on_message)
+@bot.add_listener(joins.on_member_join)
+@bot.add_listener(leaves.on_member_remove)
+
 def main():
     try:
         from config import BOT_TOKEN
