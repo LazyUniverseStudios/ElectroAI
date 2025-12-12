@@ -1,6 +1,6 @@
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from .questions import get_random_question
+from questions import get_random_question
 from discord import Embed
 
 scheduler = AsyncIOScheduler()
