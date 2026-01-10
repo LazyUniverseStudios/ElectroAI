@@ -1,5 +1,7 @@
 import random
 
+used_questions = []
+
 GeneralQuestions = {
     "aaa": "What is the most 'main character' moment you've ever had?",
     "aab": "If you were a ghost, what minor thing would you do to mildly inconvenience people?",
@@ -50,7 +52,17 @@ GeneralQuestions = {
     "abu": "What is something you thought was cool when you were a kid, but isn't now?",
     "abv": "If you could change the color of the sky, what color would it be?",
     "abw": "What is your favorite Wikipedia rabbit hole?",
-    "abx": "If you could mute one person in real life, who would it be?"
+    "abx": "If you could mute one person in real life, who would it be?",
+    "aby": "What is a 'useless' fact that you will never forget?",
+    "abz": "If you were a ghost, which celebrity would you choose to haunt?",
+    "aca": "What is the most 'out of character' thing you've ever done?",
+    "acb": "If you could eliminate one mildly annoying thing from existence (like mosquitos or slow Wi-Fi), what would it be?",
+    "acc": "What is the best 'accidental' discovery you've ever made?",
+    "acd": "If you could have any fictional character as a roommate, who would it be?",
+    "ace": "What's the most ridiculous thing you've seen someone do in public?",
+    "acf": "If you had to survive on a deserted island with only one person from this server, who would it be?",
+    "acg": "What is your 'guilty pleasure' song that you'd never admit to liking?",
+    "ach": "If you could add one illegal thing to the 'legal' list, what would it be?"
 }
 
 PressTheButton = {
@@ -103,7 +115,17 @@ PressTheButton = {
     "bbu": "Would you press the button? You can spawn a clones of yourself, but they are all incredibly lazy.",
     "bbv": "Would you press the button? You know the answer to every question, but you can't speak or write—only draw.",
     "bbw": "Would you press the button? You get a personal theme song that plays wherever you go, but you can't control the volume.",
-    "bbx": "Would you press the button? You can control fire, but you're always shivering cold."
+    "bbx": "Would you press the button? You can control fire, but you're always shivering cold.",
+    "bby": "Would you press the button? You get $1M every time you slap a stranger, but they never know why you did it.",
+    "bbz": "Would you press the button? You can talk to your future self, but every time you do, you lose a random memory from your past.",
+    "bca": "Would you press the button? You never have to sleep again, but you can only eat raw vegetables.",
+    "bcb": "Would you press the button? You can see everyone's 'crush' above their head, but they can see yours too.",
+    "bcc": "Would you press the button? You become an Olympic athlete, but you have to wear a full-body chicken suit during every competition.",
+    "bcd": "Would you press the button? You get $5M, but you can never use a smartphone again (flip phones only).",
+    "bce": "Would you press the button? You can teleport anywhere, but you arrive completely naked every time.",
+    "bcf": "Would you press the button? You can pause the world for 1 hour a day, but you have to do a Fortnite dance to activate it.",
+    "bcg": "Would you press the button? You can summon any item under $20 instantly, but it always appears in someone else's pocket first.",
+    "bch": "Would you press the button? You get your dream car for free, but the horn plays a loud, wet fart sound every time you brake."
 }
 
 ReflectionQuestions = {
@@ -156,7 +178,17 @@ ReflectionQuestions = {
     "cbu": "What is something you've learned about yourself recently?",
     "cbv": "How do you want to grow in the next year?",
     "cbw": "What is the bravest thing you've ever done?",
-    "cbx": "What is your favorite thing about your current life?"
+    "cbx": "What is your favorite thing about your current life?",
+    "cby": "What is a piece of media (book/movie/game) that genuinely changed your worldview?",
+    "cbz": "If you could see a chart of any 'hidden' stat in your life, what would it be?",
+    "cca": "What is something you used to be embarrassed about but are now proud of?",
+    "ccb": "What is the most selfless thing you've ever done for someone else?",
+    "ccc": "If you could change one personality trait of yours instantly, what would it be?",
+    "ccd": "What is the most significant 'butterfly effect' moment in your life?",
+    "cce": "What does your 'safe space' look like, whether real or imaginary?",
+    "ccf": "What is a 'hard truth' you think more people need to hear?",
+    "ccg": "How have your priorities shifted since this time last year?",
+    "cch": "What is one thing you've forgiven someone else for that they don't know about?"
 }
 
 WouldYouRather = {
@@ -209,19 +241,53 @@ WouldYouRather = {
     "dbu": "What would you rather? Be able to speak to ghosts or speak to aliens?",
     "dbv": "What would you rather? Have a permanent 200ms lag in real life or have low-resolution vision?",
     "dbw": "What would you rather? Be a master of all instruments or a master of all languages?",
-    "dbx": "What would you rather? Have to sleep in a coffin or have to sleep in a hammock?"
+    "dbx": "What would you rather? Have to sleep in a coffin or have to sleep in a hammock?",
+    "dby": "Would you rather? Only be able to communicate through emojis or only be able to communicate through 2012-era memes?",
+    "dbz": "Would you rather? Have a life-sized statue of yourself in your front yard or have your face on a local billboard?",
+    "dca": "Would you rather? Be a legendary hero who dies young or a mediocre person who lives to 150?",
+    "dcb": "Would you rather? Have the ability to change your height or the ability to change your hair color at will?",
+    "dcc": "Would you rather? Live in a world where everyone knows your thoughts or a world where you can't speak?",
+    "dcd": "Would you rather? Be a master at every video game but suck at sports, or be a pro athlete but suck at games?",
+    "dce": "Would you rather? Have a flying carpet or a submarine that can go anywhere?",
+    "dcf": "Would you rather? Only eat breakfast foods for every meal or only eat dinner foods for every meal?",
+    "dcg": "Would you rather? Be able to see through walls or be able to hear through any door?"
+}
+
+GamingAndInternet = {
+    "eaa": "What is the first username you ever used, and why was it so cringe?",
+    "eab": "If you could live inside one game world for a week, but you might actually die, would you do it? Which game?",
+    "eac": "What is the most 'toxic' gamer moment you've witnessed (or been part of)?",
+    "ead": "If you could delete one social media platform forever, which one would it be?",
+    "eae": "Which video game character do you relate to the most?",
+    "eaf": "What is an unpopular opinion you have about a 'critically acclaimed' game?",
+    "eag": "What is your most cherished 'gaming' memory from your childhood?",
+    "eah": "If you were an NPC in an RPG, what would your 'quest' be for the player?",
+    "eai": "What is the most hours you've ever put into a single game?",
+    "eaj": "Steam, Epic, or Console—which one is your primary home and why?",
+    "eak": "What's the most legendary 'clutch' or 'fail' you've ever clipped?",
+    "eal": "If you could bring one item from a video game into real life, what would it be?",
+    "eam": "What is a dead game/community you wish would come back to life?",
+    "ean": "What is the best OST (soundtrack) in gaming history?",
+    "eao": "If you were a streamer, what would be your 'gimmick'?"
 }
 
 deck_map = {
     "General Questions": GeneralQuestions,
     "Press the Button": PressTheButton,
     "Reflection Questions": ReflectionQuestions,
-    "Would You Rather?": WouldYouRather
+    "Would You Rather?": WouldYouRather,
+    "Gaming and Internet": GamingAndInternet
 }
 
 def get_random_question():
-    deck = random.choice(list(deck_map.keys()))
-    questions = deck_map[deck]
-    question_key = random.choice(list(questions.keys()))
+    if len(used_questions) >= len(WouldYouRather) + len(ReflectionQuestions) + len(PressTheButton) + len(GeneralQuestions) + len(GamingAndInternet):
+        used_questions.clear()
+    while True:
+        deck = random.choice(list(deck_map.keys()))
+        questions = deck_map[deck]
+        question_key = random.choice(list(questions.keys()))
+        if question_key not in used_questions:
+            used_questions.append(question_key)
+            break
     question = questions[question_key]
     return deck, question, question_key
