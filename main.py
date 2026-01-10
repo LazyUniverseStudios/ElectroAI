@@ -8,8 +8,6 @@ from discord.ext import commands
 
 from config import COMMAND_PREFIX
 
-import Modules
-
 dotenv.load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
@@ -20,8 +18,12 @@ bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents, help_command=
 async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}')
 
+import Modules.Listeners.joins
 bot.add_listener(Modules.Listeners.joins.on_member_join)
+import Modules.Listeners.leaves
 bot.add_listener(Modules.Listeners.leaves.on_member_remove)
+import Modules.Listeners.boosts
+bot.add_listener(Modules.Listeners.boosts.on_message)
 
 if __name__ == "__main__":
     bot.run(BOT_TOKEN)
