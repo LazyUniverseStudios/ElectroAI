@@ -17,6 +17,14 @@ bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents, help_command=
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}')
+    from Modules.QOTD.scheduler import start_qotdscheduler
+    start_qotdscheduler(bot)
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    await bot.process_commands(message)
 
 import Modules.Listeners.joins
 bot.add_listener(Modules.Listeners.joins.on_member_join)
