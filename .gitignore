@@ -1,0 +1,21 @@
+# --- Python Internals ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Virtual Environments ---
+venv/
+.venv/
+env/
+
+# --- IDE Settings ---
+.vscode/
+.idea/
+
+# --- OS Junk ---
+.DS_Store
+Thumbs.db
+
+# --- Environment Variables ---
+.env
