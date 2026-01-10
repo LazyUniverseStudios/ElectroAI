@@ -1,8 +1,6 @@
 import discord
 import os
 import dotenv
-import random
-import requests
 
 from discord.ext import commands
 
@@ -32,6 +30,26 @@ import Modules.Listeners.leaves
 bot.add_listener(Modules.Listeners.leaves.on_member_remove)
 import Modules.Listeners.boosts
 bot.add_listener(Modules.Listeners.boosts.on_message)
+
+
+import Modules.Moderation.Commands.Punishments.ban_command
+import Modules.Moderation.Commands.Punishments.kick_command
+import Modules.Moderation.Commands.Punishments.mute_command
+import Modules.Moderation.Commands.Punishments.warn_command
+import Modules.Moderation.Commands.Punishments.unban_command
+import Modules.Moderation.Commands.Punishments.unmute_command
+import Modules.Moderation.Commands.Punishments.unwarn_command
+
+import Modules.Moderation.Commands.Channels.purge_command
+import Modules.Moderation.Commands.Channels.lock_command
+import Modules.Moderation.Commands.Channels.unlock_command
+
+import Modules.Moderation.Commands.Cases.cases_command
+import Modules.Moderation.Commands.Cases.case_delete_command
+import Modules.Moderation.Commands.Cases.case_info_command
+import Modules.Moderation.Commands.Cases.case_edit_command
+
+
 
 if __name__ == "__main__":
     bot.run(BOT_TOKEN)
