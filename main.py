@@ -50,6 +50,12 @@ import Modules.Moderation.Commands.Cases.case_info_command
 import Modules.Moderation.Commands.Cases.case_edit_command
 
 
+import Modules.Economy.Commands.TimeRewards.daily_reward_command
+import Modules.Economy.Commands.TimeRewards.weekly_reward_command
+import Modules.Economy.Commands.TimeRewards.monthly_reward_command
+
+import Modules.Economy.Commands.Transaction.shop_command
+
 
 if __name__ == "__main__":
     bot.run(BOT_TOKEN)

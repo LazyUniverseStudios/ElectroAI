@@ -2,7 +2,7 @@ import mysql.connector
 import os
 import dotenv
 
-dotenv.load_dotenv()
+dotenv.load_dotenv(dotenv_path="../../.env")
 DB_ADDRESS = os.getenv("DB_ADDRESS")
 DB_PORT = int(os.getenv("DB_PORT"))
 DB_USERNAME = os.getenv("DB_USERNAME")
