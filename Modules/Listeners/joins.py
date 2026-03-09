@@ -34,3 +34,6 @@ async def on_member_join(member):
         await sleep(1)
         role = member.guild.get_role(1412101886001020929)
         await member.add_roles(role)
+    
+    from InternalLogic.DatabaseLogic.DBQueries import CreateUserIfNotExists
+    await CreateUserIfNotExists(member.id)

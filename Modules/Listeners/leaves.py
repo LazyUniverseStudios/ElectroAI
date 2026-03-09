@@ -9,3 +9,6 @@ async def on_member_remove(member):
     
     channel = member.guild.get_channel(1412087983720632400)
     await channel.send(embed=embed)
+
+    from InternalLogic.DatabaseLogic.DBQueries import DropUser
+    await DropUser(member.id)

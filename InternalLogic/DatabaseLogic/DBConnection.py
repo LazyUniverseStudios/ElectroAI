@@ -1,4 +1,4 @@
-import mysql.connector
+import aiomysql as mysqlconnector
 import os
 import dotenv
 
@@ -9,11 +9,11 @@ DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
 
-def DB_GetConnection():
-    return mysql.connector.connect(
+async def DB_GetConnection():
+    return await mysqlconnector.connect(
         host=DB_ADDRESS,
         port = DB_PORT,
-        username = DB_USERNAME,
+        user = DB_USERNAME,
         password = DB_PASSWORD,
         database = DB_NAME
         )
