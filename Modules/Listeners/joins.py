@@ -1,6 +1,7 @@
 from discord import Embed
 import discord
 from asyncio import sleep
+from InternalLogic.DatabaseLogic.DBQueries import CreateUserIfNotExists
 
 async def on_member_join(member):
     embed = Embed(title="Electro Cafe™", description=f"Welcome to our server, {member.mention}!", color=0x3b2dff)
@@ -35,5 +36,4 @@ async def on_member_join(member):
         role = member.guild.get_role(1412101886001020929)
         await member.add_roles(role)
     
-    from InternalLogic.DatabaseLogic.DBQueries import CreateUserIfNotExists
     await CreateUserIfNotExists(member.id)
