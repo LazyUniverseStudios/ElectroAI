@@ -15,5 +15,5 @@ async def DB_GetConnection():
         port = DB_PORT,
         user = DB_USERNAME,
         password = DB_PASSWORD,
-        database = DB_NAME
+        db = DB_NAME
         )

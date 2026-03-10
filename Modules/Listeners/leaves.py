@@ -8,7 +8,7 @@ async def on_member_remove(member):
     embed.add_field(name="Stay Connected!", value="Feel free to rejoin us anytime!", inline=False)
     embed.set_footer(text=f"We are now at {member.guild.member_count} members.")
     
-    channel = member.guild.get_channel(1412087983720632400)
+    channel = member.guild.get_channel(1459155124089000072)
     await channel.send(embed=embed)
 
     await DropUser(member.id)

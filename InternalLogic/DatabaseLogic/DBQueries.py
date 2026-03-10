@@ -1,6 +1,6 @@
 import aiomysql as mysqlconnector
 from .DBConnection import DB_GetConnection
-from Modules.Moderation.Logic.create_caseid import CreateCaseID
+from Modules.Moderation.Logic.create_caseid import GenerateCaseID
 
 async def CreateUserIfNotExists(user_id: int):
     conn = await DB_GetConnection()

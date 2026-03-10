@@ -5,9 +5,10 @@ import dotenv
 from discord.ext import commands
 
 from config import COMMAND_PREFIX
-
 dotenv.load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+
+from InternalLogic.DatabaseLogic.DBQueries import CreateUserIfNotExists
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents, help_command=None, case_insensitive=True)
@@ -17,6 +18,11 @@ async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}')
     from Modules.QOTD.scheduler import start_qotdscheduler
     start_qotdscheduler(bot)
+
+    for guild in bot.guilds:
+        for member in guild.members:
+            if not member.bot:
+                await CreateUserIfNotExists(member.id)
 
 @bot.event
 async def on_message(message):
@@ -33,6 +39,7 @@ bot.add_listener(Modules.Listeners.boosts.on_message)
 
 
 import Modules.Moderation.Commands.Punishments.ban_command
+bot.add_command(Modules.Moderation.Commands.Punishments.ban_command.ban_command)
 import Modules.Moderation.Commands.Punishments.kick_command
 import Modules.Moderation.Commands.Punishments.mute_command
 import Modules.Moderation.Commands.Punishments.warn_command
