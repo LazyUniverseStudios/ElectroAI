@@ -26,6 +26,14 @@ async def DropUser(user_id: int):
     await cursor.close()
     conn.close()
 
+async def CreateCase(CaseID: str, CaseType: str, ModeratorID: int, TargetID: int, reason: str):
+    conn = await DB_GetConnection()
+    cursor = await conn.cursor()
+    await cursor.execute("INSERT INTO moderation (CaseID, CaseType, ModeratorID, TargetID, Reason) VALUES (%s, %s, %s, %s, %s)", (CaseID, CaseType, ModeratorID, TargetID, reason))
+    await conn.commit()
+    await cursor.close()
+    conn.close()
+
 async def FetchUserBalance(user_id: int):
     conn = await DB_GetConnection()
     cursor = await conn.cursor()
@@ -116,4 +124,3 @@ async def UpdateUserXP_Set(user_id: int, xp: int):
     await conn.commit()
     await cursor.close()
     conn.close()
-
