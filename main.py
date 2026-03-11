@@ -38,9 +38,14 @@ import Modules.Listeners.boosts
 bot.add_listener(Modules.Listeners.boosts.on_message)
 
 
+import Modules.Misc.AdminCommands.restart
+bot.add_command(Modules.Misc.AdminCommands.restart.restart_command)
+
+
 import Modules.Moderation.Commands.Punishments.ban_command
 bot.add_command(Modules.Moderation.Commands.Punishments.ban_command.ban_command)
 import Modules.Moderation.Commands.Punishments.kick_command
+bot.add_command(Modules.Moderation.Commands.Punishments.kick_command.kick_command)
 import Modules.Moderation.Commands.Punishments.mute_command
 import Modules.Moderation.Commands.Punishments.warn_command
 import Modules.Moderation.Commands.Punishments.unban_command

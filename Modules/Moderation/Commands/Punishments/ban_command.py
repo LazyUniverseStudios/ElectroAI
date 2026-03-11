@@ -52,10 +52,10 @@ async def ban_command(ctx, target: discord.User = None, *, reason=None):
         await ctx.guild.ban(target, reason=reason)
         case_id = await GenerateCaseID()
         await CreateCase(case_id, "Ban", author.id, target.id, reason)
-        embed = embeds.Embed(title="User Banned", description=f"{target.mention} has been banned.\nReason: {reason}\nCase ID: {case_id}", color=0x00FF00)
+        embed = embeds.Embed(title="User Banned", description=f"{target.mention} has been banned.\n{reason}\nCase ID: {case_id}", color=0x00FF00)
         await ctx.send(embed=embed)
         try:
-            await target.send(f"You have been banned from {ctx.guild.name} for the following reason: {reason}. CaseID: {case_id}. Moderator: {author.name} ({author.id})")
+            await target.send(f"You have been banned from {ctx.guild.name}\n{reason}. \nCaseID: {case_id}. Moderator: {author.name} ({author.id})")
         except:
             print(f"Unable to DM user {target.name} ({target.id}).")
     except Exception as e:
