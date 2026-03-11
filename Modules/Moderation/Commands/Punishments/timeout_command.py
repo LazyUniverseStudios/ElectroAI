@@ -3,9 +3,10 @@ from discord.ext import commands
 from discord import embeds
 from Modules.Moderation.Logic.create_caseid import GenerateCaseID
 from InternalLogic.DatabaseLogic.DBQueries import CreateCase
+import datetime
 
 @commands.command(name="timeout", aliases=["tm", "mute"])
-async def timeout_command(ctx, target: discord.Member = None, duration: int = None, *, reason=None):
+async def timeout_command(ctx, target: discord.Member = None, duration = None, *, reason=None):
     author = ctx.author
     bot = ctx.guild.me
 
@@ -54,8 +55,26 @@ async def timeout_command(ctx, target: discord.Member = None, duration: int = No
         await ctx.send(embed=embed)
         return
 
+    if target.timedout_until != None:
+        embed = embeds.Embed(title="Error", description="I cannot timeout this user because they are already timed out.", color=0xFF0000)
+        await ctx.send(embed=embed)
+        return
+
+    if duration[-1] == "s":
+        duration = int(duration[:-1]) / 60
+    elif duration[-1] == "m":
+        duration = int(duration[:-1])
+    elif duration[-1] == "h":
+        duration = int(duration[:-1]) * 60
+    elif duration[-1] == "d":
+        duration = int(duration[:-1]) * 60 * 24
+    else:
+        embed = embeds.Embed(title="Error", description="Invalid duration format. Please specify the duration in seconds (s), minutes (m), hours (h), or days (d). For example: 10m for 10 minutes.", color=0xFF0000)
+        await ctx.send(embed=embed)
+        return
+
     try:
-        await target.timeout(discord.utils.utcnow() + discord.timedelta(minutes=duration), reason=reason)
+        await target.timeout(discord.utils.utcnow() + datetime.timedelta(minutes=duration), reason=reason)
         case_id = await GenerateCaseID()
         await CreateCase(case_id, "Timeout", author.id, target.id, reason)
         embed = embeds.Embed(title="User Timed Out", description=f"{target.mention} has been timed out for {duration} minutes.\n{reason}\nCase ID: {case_id}", color=0x00FF00)
