@@ -15,13 +15,13 @@ async def ban_command(ctx, target: discord.User = None, *, reason=None):
         embed = embeds.Embed(title="Error", description="I do not have permission to ban members.", color=0xFF0000)
         await ctx.send(embed=embed)
         return
+    
     if author.guild_permissions.ban_members or author.guild_permissions.administrator:
         pass
     else:
         embed = embeds.Embed(title="Error", description="You do not have permission to ban members.", color=0xFF0000)
         await ctx.send(embed=embed)
         return
-    
     
     if target == None:
         embed = embeds.Embed(title="Error", description="Please specify a user to ban.", color=0xFF0000)
@@ -31,6 +31,7 @@ async def ban_command(ctx, target: discord.User = None, *, reason=None):
     if reason == None:
         reason = "No reason provided."
     reason=f"Moderator: {author.name} ({author.id}) | Reason: {reason}"
+    
     if isinstance(target, discord.Member):
         if bot.top_role <= target.top_role:
             embed = embeds.Embed(title="Error", description="I cannot ban this user because they have a higher or equal role than me.", color=0xFF0000)
@@ -46,7 +47,6 @@ async def ban_command(ctx, target: discord.User = None, *, reason=None):
         embed = embeds.Embed(title="Error", description="You cannot ban the server owner.", color=0xFF0000)
         await ctx.send(embed=embed)
         return
-    
     
     try:
         await ctx.guild.ban(target, reason=reason)

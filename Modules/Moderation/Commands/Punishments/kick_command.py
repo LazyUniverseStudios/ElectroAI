@@ -15,6 +15,7 @@ async def kick_command(ctx, target: discord.Member = None, *, reason=None):
         embed = embeds.Embed(title="Error", description="I do not have permission to kick members.", color=0xFF0000)
         await ctx.send(embed=embed)
         return
+    
     if author.guild_permissions.kick_members or author.guild_permissions.administrator:
         pass
     else:
@@ -31,6 +32,7 @@ async def kick_command(ctx, target: discord.Member = None, *, reason=None):
     if reason == None:
         reason = "No reason provided."
     reason=f"Moderator: {author.name} ({author.id}) | Reason: {reason}"
+    
     if isinstance(target, discord.Member):
         if bot.top_role <= target.top_role:
             embed = embeds.Embed(title="Error", description="I cannot kick this user because they have a higher or equal role than me.", color=0xFF0000)
@@ -47,7 +49,6 @@ async def kick_command(ctx, target: discord.Member = None, *, reason=None):
         await ctx.send(embed=embed)
         return
     
-    
     try:
         await ctx.guild.kick(target, reason=reason)
         case_id = await GenerateCaseID()
@@ -55,7 +56,7 @@ async def kick_command(ctx, target: discord.Member = None, *, reason=None):
         embed = embeds.Embed(title="User Kicked", description=f"{target.mention} has been kicked.\n{reason}\nCase ID: {case_id}", color=0x00FF00)
         await ctx.send(embed=embed)
         try:
-            await target.send(f"You have been kicked from {ctx.guild.name}\n{reason}. CaseID: {case_id}. Moderator: {author.name} ({author.id})")
+            await target.send(f"You have been kicked from {ctx.guild.name}\n{reason}. \nCaseID: {case_id}. Moderator: {author.name} ({author.id})")
         except:
             print(f"Unable to DM user {target.name} ({target.id}).")
     except Exception as e:

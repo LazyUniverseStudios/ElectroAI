@@ -35,7 +35,7 @@ CREATE TABLE `ElectroAI`.`Economy` (
 
 CREATE TABLE `ElectroAI`.`Moderation` (
     `CaseID` CHAR(6) NOT NULL,
-    `CaseType` CHAR(10) NOT NULL,
+    `CaseType` CHAR(12) NOT NULL,
     `ModeratorID` BIGINT UNSIGNED NOT NULL,
     `TargetID` BIGINT UNSIGNED NOT NULL,
     `Reason` LONGTEXT NOT NULL,
