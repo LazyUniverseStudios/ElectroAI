@@ -46,10 +46,13 @@ import Modules.Moderation.Commands.Punishments.ban_command
 bot.add_command(Modules.Moderation.Commands.Punishments.ban_command.ban_command)
 import Modules.Moderation.Commands.Punishments.kick_command
 bot.add_command(Modules.Moderation.Commands.Punishments.kick_command.kick_command)
-import Modules.Moderation.Commands.Punishments.mute_command
+import Modules.Moderation.Commands.Punishments.timeout_command
+bot.add_command(Modules.Moderation.Commands.Punishments.timeout_command.timeout_command)
 import Modules.Moderation.Commands.Punishments.warn_command
 import Modules.Moderation.Commands.Punishments.unban_command
-import Modules.Moderation.Commands.Punishments.unmute_command
+bot.add_command(Modules.Moderation.Commands.Punishments.unban_command.unban_command)
+import Modules.Moderation.Commands.Punishments.untimeout_command
+bot.add_command(Modules.Moderation.Commands.Punishments.untimeout_command.untimeout_command)
 import Modules.Moderation.Commands.Punishments.unwarn_command
 
 import Modules.Moderation.Commands.Channels.purge_command

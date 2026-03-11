@@ -9,7 +9,7 @@ scheduler = AsyncIOScheduler()
 async def send_daily_question(client):
     await client.wait_until_ready()
     guild = client.get_guild(1216146656878133429)
-    channel = guild.get_channel(1412088735729975326)
+    channel = guild.get_channel(1435649305586434089)
     pingrole = guild.get_role(1412102087663157360)
 
     deck, question, question_key = get_random_question()

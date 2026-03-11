@@ -4,7 +4,7 @@ from discord import embeds
 from Modules.Moderation.Logic.create_caseid import GenerateCaseID
 from InternalLogic.DatabaseLogic.DBQueries import CreateCase
 
-@commands.command(name="untimeout")
+@commands.command(name="untimeout", aliases=["um", "unmute"])
 async def untimeout_command(ctx, target: discord.Member = None, *, reason=None):
     author = ctx.author
     bot = ctx.guild.me

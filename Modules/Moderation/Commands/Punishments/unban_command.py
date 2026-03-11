@@ -4,7 +4,7 @@ from discord import embeds
 from Modules.Moderation.Logic.create_caseid import GenerateCaseID
 from InternalLogic.DatabaseLogic.DBQueries import CreateCase
 
-@commands.command(name="unban")
+@commands.command(name="unban", aliases=["ub"])
 async def unban_command(ctx, target: discord.User = None, *, reason=None):
     author = ctx.author
     bot = ctx.guild.me
