@@ -29,7 +29,7 @@ async def untimeout_command(ctx, target: discord.Member = None, *, reason=None):
         await ctx.send(embed=embed)
         return
 
-    if target.timedout_until == None:
+    if target.timed_out_until == None:
         embed = embeds.Embed(title="Error", description="I cannot remove the timeout from this user because they are not currently timed out.", color=0xFF0000)
         await ctx.send(embed=embed)
         return

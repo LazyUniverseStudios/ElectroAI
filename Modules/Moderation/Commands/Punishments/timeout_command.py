@@ -55,7 +55,7 @@ async def timeout_command(ctx, target: discord.Member = None, duration = None, *
         await ctx.send(embed=embed)
         return
 
-    if target.timedout_until != None:
+    if target.timed_out_until != None:
         embed = embeds.Embed(title="Error", description="I cannot timeout this user because they are already timed out.", color=0xFF0000)
         await ctx.send(embed=embed)
         return
