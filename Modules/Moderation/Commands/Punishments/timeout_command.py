@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from discord import embeds
 from Modules.Moderation.Logic.create_caseid import GenerateCaseID
-from InternalLogic.DatabaseLogic.DBQueries import CreateCase
+from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Cases import CreateCase
 import datetime
 
 @commands.command(name="timeout", aliases=["tm", "mute"])

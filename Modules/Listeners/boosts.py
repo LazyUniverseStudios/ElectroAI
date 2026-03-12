@@ -1,6 +1,6 @@
 from discord import Embed
 import discord
-from InternalLogic.DatabaseLogic.DBQueries import UpdateUserBalance_Add
+from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Economy import UpdateUserBalance_Add
 
 async def on_message(message):
     if message.type == discord.MessageType.premium_guild_subscription:

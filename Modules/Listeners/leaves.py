@@ -1,5 +1,5 @@
 from discord import Embed
-from InternalLogic.DatabaseLogic.DBQueries import DropUser
+from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Door import DropUser
 
 async def on_member_remove(member):
     embed = Embed(title="Goodbye!", description=f"We're sad to see you go, {member.mention}.", color=0x6495ED)
