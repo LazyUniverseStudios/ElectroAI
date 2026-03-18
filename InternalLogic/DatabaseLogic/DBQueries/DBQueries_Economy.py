@@ -29,6 +29,62 @@ async def ClaimDailyReward(user_id: int):
         await cursor.close()
         conn.close()
 
+async def ClaimMonthlyReward(user_id: int):
+    conn = await DB_GetConnection()
+    cursor = await conn.cursor()
+    try:
+        await cursor.execute("""
+                    UPDATE Economy 
+                    SET 
+                        Coins = Coins + %s, 
+                        MonthlyRewardNextUse = NOW() + INTERVAL 30 DAY
+                    WHERE UserID = %s 
+                  AND (MonthlyRewardNextUse IS NULL OR MonthlyRewardNextUse <= NOW())
+            """, (5000, user_id))
+        if cursor.rowcount > 0:
+            await conn.commit()
+            new_cooldown = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=30)
+            return True, new_cooldown
+        else:
+            await cursor.execute("SELECT MonthlyRewardNextUse FROM Economy WHERE UserID = %s", (user_id,))
+            result = await cursor.fetchone()
+            next_use_time = result[0] if result else None
+            return False, next_use_time
+    except Exception as e:
+        print(f"Error claiming monthly reward for user {user_id}: {e}")
+        return None, None
+    finally:
+        await cursor.close()
+        conn.close()
+
+async def ClaimWeeklyReward(user_id: int):
+    conn = await DB_GetConnection()
+    cursor = await conn.cursor()
+    try:
+        await cursor.execute("""
+                    UPDATE Economy 
+                    SET 
+                        Coins = Coins + %s, 
+                        WeeklyRewardNextUse = NOW() + INTERVAL 7 DAY
+                    WHERE UserID = %s 
+                  AND (WeeklyRewardNextUse IS NULL OR WeeklyRewardNextUse <= NOW())
+            """, (2000, user_id))
+        if cursor.rowcount > 0:
+            await conn.commit()
+            new_cooldown = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=7)
+            return True, new_cooldown
+        else:
+            await cursor.execute("SELECT WeeklyRewardNextUse FROM Economy WHERE UserID = %s", (user_id,))
+            result = await cursor.fetchone()
+            next_use_time = result[0] if result else None
+            return False, next_use_time
+    except Exception as e:
+        print(f"Error claiming weekly reward for user {user_id}: {e}")
+        return None, None
+    finally:
+        await cursor.close()
+        conn.close()
+
 async def FetchUserBalance(user_id: int):
     conn = await DB_GetConnection()
     cursor = await conn.cursor()

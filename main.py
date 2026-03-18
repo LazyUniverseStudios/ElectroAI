@@ -66,8 +66,11 @@ import Modules.Moderation.Commands.Cases.case_edit_command
 
 
 import Modules.Economy.Commands.TimeRewards.daily_reward_command
+bot.add_command(Modules.Economy.Commands.TimeRewards.daily_reward_command.daily_reward_command)
 import Modules.Economy.Commands.TimeRewards.weekly_reward_command
+bot.add_command(Modules.Economy.Commands.TimeRewards.weekly_reward_command.weekly_reward_command)
 import Modules.Economy.Commands.TimeRewards.monthly_reward_command
+bot.add_command(Modules.Economy.Commands.TimeRewards.monthly_reward_command.monthly_reward_command)
 
 import Modules.Economy.Commands.Transaction.shop_command
 
