@@ -8,7 +8,7 @@ from config import COMMAND_PREFIX
 dotenv.load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-from InternalLogic.DatabaseLogic.DBQueries import CreateUserIfNotExists
+from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Door import CreateUserIfNotExists
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents, help_command=None, case_insensitive=True)
@@ -48,12 +48,12 @@ import Modules.Moderation.Commands.Punishments.kick_command
 bot.add_command(Modules.Moderation.Commands.Punishments.kick_command.kick_command)
 import Modules.Moderation.Commands.Punishments.timeout_command
 bot.add_command(Modules.Moderation.Commands.Punishments.timeout_command.timeout_command)
-import Modules.Moderation.Commands.Punishments.warn_command
+import Modules.Moderation.Commands.Punishments.Warns.warn_command
 import Modules.Moderation.Commands.Punishments.unban_command
 bot.add_command(Modules.Moderation.Commands.Punishments.unban_command.unban_command)
 import Modules.Moderation.Commands.Punishments.untimeout_command
 bot.add_command(Modules.Moderation.Commands.Punishments.untimeout_command.untimeout_command)
-import Modules.Moderation.Commands.Punishments.unwarn_command
+import Modules.Moderation.Commands.Punishments.Warns.unwarn_command
 
 import Modules.Moderation.Commands.Channels.purge_command
 import Modules.Moderation.Commands.Channels.lock_command

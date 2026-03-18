@@ -25,6 +25,9 @@ CREATE TABLE `ElectroAI`.`Leveling`(
 CREATE TABLE `ElectroAI`.`Economy` (
     `UserID` BIGINT UNSIGNED NOT NULL,
     `Coins` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    `DailyRewardNextUse` TIMESTAMP DEFAULT NULL,
+    `WeeklyRewardNextUse` TIMESTAMP DEFAULT NULL,
+    `MonthlyRewardNextUse` TIMESTAMP DEFAULT NULL,
 
     PRIMARY KEY (`UserID`),
     CONSTRAINT `fk_economy_id`
@@ -58,4 +61,3 @@ CREATE TABLE `ElectroAI`.`Birthdays` (
         REFERENCES `ElectroAI`.`Users` (`UserID`)
         ON DELETE CASCADE
 );
-
