@@ -38,6 +38,11 @@ import Modules.Listeners.boosts
 bot.add_listener(Modules.Listeners.boosts.on_message)
 
 
+import Modules.Misc.UserCommands.help_command
+bot.add_command(Modules.Misc.UserCommands.help_command.help_command)
+import Modules.Misc.UserCommands.ping_command
+bot.add_command(Modules.Misc.UserCommands.ping_command.ping_command)
+
 import Modules.Misc.AdminCommands.restart
 bot.add_command(Modules.Misc.AdminCommands.restart.restart_command)
 
@@ -49,11 +54,13 @@ bot.add_command(Modules.Moderation.Commands.Punishments.kick_command.kick_comman
 import Modules.Moderation.Commands.Punishments.timeout_command
 bot.add_command(Modules.Moderation.Commands.Punishments.timeout_command.timeout_command)
 import Modules.Moderation.Commands.Punishments.Warns.warn_command
+bot.add_command(Modules.Moderation.Commands.Punishments.Warns.warn_command.warn_command)
 import Modules.Moderation.Commands.Punishments.unban_command
 bot.add_command(Modules.Moderation.Commands.Punishments.unban_command.unban_command)
 import Modules.Moderation.Commands.Punishments.untimeout_command
 bot.add_command(Modules.Moderation.Commands.Punishments.untimeout_command.untimeout_command)
 import Modules.Moderation.Commands.Punishments.Warns.unwarn_command
+bot.add_command(Modules.Moderation.Commands.Punishments.Warns.unwarn_command.unwarn_command)
 
 import Modules.Moderation.Commands.Channels.purge_command
 import Modules.Moderation.Commands.Channels.lock_command
@@ -65,6 +72,9 @@ import Modules.Moderation.Commands.Cases.case_info_command
 import Modules.Moderation.Commands.Cases.case_edit_command
 
 
+import Modules.Economy.Commands.Balance.balance_command
+bot.add_command(Modules.Economy.Commands.Balance.balance_command.balance_command)
+
 import Modules.Economy.Commands.TimeRewards.daily_reward_command
 bot.add_command(Modules.Economy.Commands.TimeRewards.daily_reward_command.daily_reward_command)
 import Modules.Economy.Commands.TimeRewards.weekly_reward_command
@@ -74,6 +84,8 @@ bot.add_command(Modules.Economy.Commands.TimeRewards.monthly_reward_command.mont
 
 import Modules.Economy.Commands.Transaction.shop_command
 
+import Modules.Economy.Commands.Gambling.coinflip_command
+bot.add_command(Modules.Economy.Commands.Gambling.coinflip_command.coinflip_command)
 
 if __name__ == "__main__":
     bot.run(BOT_TOKEN)

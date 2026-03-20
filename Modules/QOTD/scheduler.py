@@ -1,7 +1,7 @@
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .questions import get_random_question
-import config
+from config import EmbedColor
 from discord import Embed
 
 scheduler = AsyncIOScheduler()
@@ -13,7 +13,7 @@ async def send_daily_question(client):
     pingrole = guild.get_role(1412102087663157360)
 
     deck, question, question_key = get_random_question()
-    embed = Embed(title="Question of the Day")
+    embed = Embed(title="Question of the Day", color=EmbedColor)
     embed.description = question
     embed.set_footer(text=f"{deck} | {question_key}")
     await channel.send(pingrole.mention, embed=embed)

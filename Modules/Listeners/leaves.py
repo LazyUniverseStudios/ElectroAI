@@ -1,8 +1,9 @@
 from discord import Embed
 from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Door import DropUser
+from config import EmbedColor
 
 async def on_member_remove(member):
-    embed = Embed(title="Goodbye!", description=f"We're sad to see you go, {member.mention}.", color=0x6495ED)
+    embed = Embed(title="Goodbye!", description=f"We're sad to see you go, {member.mention}.", color=EmbedColor)
     embed.set_thumbnail(url=member.avatar.url if member.avatar else member.default_avatar.url)
     embed.add_field(name="Farewell!", value="Thank you for being part of our community!", inline=False)
     embed.add_field(name="Stay Connected!", value="Feel free to rejoin us anytime!", inline=False)

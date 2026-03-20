@@ -61,3 +61,21 @@ CREATE TABLE `ElectroAI`.`Birthdays` (
         REFERENCES `ElectroAI`.`Users` (`UserID`)
         ON DELETE CASCADE
 );
+
+CREATE TABLE `ElectroAI`.`Reminders` (
+    `ReminderID` CHAR(6) NOT NULL,
+    `UserID` BIGINT UNSIGNED NOT NULL,
+    `ReminderName` VARCHAR(32) NOT NULL,
+    `ReminderText` LONGTEXT,
+    `ReminderTime` TIMESTAMP NOT NULL,
+
+    PRIMARY KEY (`ReminderID`),
+)
+
+CREATE TABLE `ElectroAI`.`CommandCooldowns` (
+    `UserID` BIGINT UNSIGNED NOT NULL,
+    `CommandName` VARCHAR(32) NOT NULL,
+    `CooldownEndTime` TIMESTAMP NOT NULL,
+
+    PRIMARY KEY (`UserID`),
+)

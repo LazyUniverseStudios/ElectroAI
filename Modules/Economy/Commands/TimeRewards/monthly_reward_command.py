@@ -3,6 +3,7 @@ from discord import embeds
 from discord.ext import commands
 from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Economy import ClaimMonthlyReward
 from datetime import datetime, timedelta, timezone
+from config import EmbedColor, EmbedColor_Error
 
 @commands.command(name='monthly', aliases=["monthlyreward"])
 async def monthly_reward_command(ctx):
@@ -15,14 +16,14 @@ async def monthly_reward_command(ctx):
         embed = discord.Embed(
             title="Database Error", 
             description="I couldn't reach the database. Please try again in a few moments, or contact support if the issue persists.", 
-            color=0xFF0000
+            color=EmbedColor_Error
         )
     elif result is True:
         unix_timestamp = int(next_use_time.timestamp())
         embed = discord.Embed(
             title="Reward Claimed!", 
             description=f"You've received 5,000 coins!\nYour next reward is available <t:{unix_timestamp}:R>.", 
-            color=0x00FF00
+            color=EmbedColor
         )
         embed.set_footer(text="Come back next month!")
     else:
@@ -35,7 +36,7 @@ async def monthly_reward_command(ctx):
         embed = discord.Embed(
             title="On Cooldown", 
             description=cooldown_msg, 
-            color=0xFFEE00
+            color=EmbedColor_Error
         )
 
     await ctx.send(embed=embed)
