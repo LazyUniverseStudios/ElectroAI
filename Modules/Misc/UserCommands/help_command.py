@@ -25,7 +25,7 @@ async def help_command(ctx, *, query: str = None):
     ModuleSelectDropdown = Select(
         placeholder="Select a module to view its commands",
         options=[
-            discord.SelectOption(label="Moderation", description="Commands for managing your server", value="moderation"),
+            discord.SelectOption(label="Moderation", description="Commands for moderating the server", value="moderation"),
             discord.SelectOption(label="Economy", description="Commands for the economy system", value="economy"),
             discord.SelectOption(label="Fun", description="Fun and games commands", value="fun"),
             discord.SelectOption(label="Utility", description="Useful utility commands", value="utility"),

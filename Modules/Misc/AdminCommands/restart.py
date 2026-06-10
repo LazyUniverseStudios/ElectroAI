@@ -1,9 +1,9 @@
+import os
 import discord
 from discord.ext import commands
-import os
 import sys
-from discord import embeds
 from config import EmbedColor_Misc
+import subprocess
 
 @commands.command(name='restart', help='Restarts the bot (Admin only)')
 async def restart_command(ctx):
@@ -14,5 +14,6 @@ async def restart_command(ctx):
     embed = discord.Embed(title="Restarting...", description="The bot is restarting. Please wait a moment.", color=EmbedColor_Misc)
     await ctx.send(embed=embed)
     await ctx.bot.close()
-    os.execv(sys.executable, ['python'] + sys.argv)
+    subprocess.Popen([sys.executable] + sys.argv)
+    os._exit(0)
     
