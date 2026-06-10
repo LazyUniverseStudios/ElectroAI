@@ -145,10 +145,38 @@ async def UpdateUserEconomy_Reset(user_id: int):
     conn = await DB_GetConnection()
     cursor = await conn.cursor()
     try:
-        await cursor.execute("UPDATE economy SET Coins = 0 WHERE UserID = %s", (user_id,))
+        await cursor.execute("""
+                    UPDATE Economy 
+                    SET 
+                        Coins = 0,
+                        DailyRewardNextUse = NULL,
+                        WeeklyRewardNextUse = NULL,
+                        MonthlyRewardNextUse = NULL
+                    WHERE UserID = %s
+            """, (user_id,))
         await conn.commit()
     except Exception as e:
         print(f"Error resetting user economy for user {user_id}: {e}")
+        await conn.rollback()
+    finally:
+        await cursor.close()
+        conn.close()
+
+async def UpdateServerEconomy_Reset():
+    conn = await DB_GetConnection()
+    cursor = await conn.cursor()
+    try:
+        await cursor.execute("""
+                    UPDATE Economy 
+                    SET 
+                        Coins = 0,
+                        DailyRewardNextUse = NULL,
+                        WeeklyRewardNextUse = NULL,
+                        MonthlyRewardNextUse = NULL
+            """)
+        await conn.commit()
+    except Exception as e:
+        print(f"Error resetting server economy: {e}")
         await conn.rollback()
     finally:
         await cursor.close()

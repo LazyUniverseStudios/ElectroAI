@@ -5,7 +5,7 @@ import sys
 from config import EmbedColor_Misc
 import subprocess
 
-@commands.command(name='restart', help='Restarts the bot (Admin only)')
+@commands.command(name='restart')
 async def restart_command(ctx):
     author_id = ctx.author.id
     if author_id != 757868967384711249:

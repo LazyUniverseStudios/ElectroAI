@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 from discord import Embed
 from discord.ui import Button, View, Select, Modal, TextInput
-from config import COMMAND_PREFIX, EmbedColor, EmbedColor_Error, EmbedColor_Success
+from config import COMMAND_PREFIX, EmbedColor
 
 @commands.command(name='help')
 async def help_command(ctx, *, query: str = None):
