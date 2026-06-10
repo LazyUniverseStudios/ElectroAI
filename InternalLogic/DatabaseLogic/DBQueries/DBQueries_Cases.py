@@ -13,6 +13,45 @@ async def CreateCase(CaseID: str, CaseType: str, ModeratorID: int, TargetID: int
         await cursor.close()
         conn.close()
 
+async def DeleteCase(CaseID: str):
+    conn = await DB_GetConnection()
+    cursor = await conn.cursor()
+    try:
+        await cursor.execute("DELETE FROM moderation WHERE CaseID = %s", (CaseID,))
+        await conn.commit()
+    except Exception as e:
+        print(f"Error deleting case {CaseID}: {e}")
+        await conn.rollback()
+    finally:
+        await cursor.close()
+        conn.close()
+
+async def OpenCase(CaseID: str):
+    conn = await DB_GetConnection()
+    cursor = await conn.cursor()
+    try:
+        await cursor.execute("UPDATE moderation SET IsOpen = 1 WHERE CaseID = %s", (CaseID,))
+        await conn.commit()
+    except Exception as e:
+        print(f"Error opening case {CaseID}: {e}")
+        await conn.rollback()
+    finally:
+        await cursor.close()
+        conn.close()
+
+async def CloseCase(CaseID: str):
+    conn = await DB_GetConnection()
+    cursor = await conn.cursor()
+    try:
+        await cursor.execute("UPDATE moderation SET IsOpen = 0 WHERE CaseID = %s", (CaseID,))
+        await conn.commit()
+    except Exception as e:
+        print(f"Error closing case {CaseID}: {e}")
+        await conn.rollback()
+    finally:
+        await cursor.close()
+        conn.close()
+
 async def FetchCase(CaseID: str):
     conn = await DB_GetConnection()
     cursor = await conn.cursor()

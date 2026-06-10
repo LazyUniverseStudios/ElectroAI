@@ -24,14 +24,16 @@ async def warn_command(ctx, target: discord.Member = None, *, reason=None):
         await ctx.send(embed=embed)
         return
     
+
     if target == None:
         embed = embeds.Embed(title="Error", description="Please specify a user to warn.", color=EmbedColor_Error)
         await ctx.send(embed=embed)
         return
     
+
     if reason == None:
         reason = "No reason provided."
-    reason=f"Moderator: {author.name} ({author.id}) | Reason: {reason}"
+
 
     if isinstance(target, discord.Member):
         if bot.top_role <= target.top_role:
@@ -43,6 +45,7 @@ async def warn_command(ctx, target: discord.Member = None, *, reason=None):
             embed = embeds.Embed(title="Error", description="You cannot warn this user because they have a higher or equal role than you.", color=EmbedColor_Error)
             await ctx.send(embed=embed)
             return
+    
     
     if target == ctx.guild.owner:
         embed = embeds.Embed(title="Error", description="You cannot warn the server owner.", color=EmbedColor_Error)
