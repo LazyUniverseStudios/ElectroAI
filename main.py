@@ -87,5 +87,10 @@ import Modules.Economy.Commands.Transaction.shop_command
 import Modules.Economy.Commands.Gambling.coinflip_command
 bot.add_command(Modules.Economy.Commands.Gambling.coinflip_command.coinflip_command)
 
+import Modules.Economy.Commands.Admin.econ_resetserver
+bot.add_command(Modules.Economy.Commands.Admin.econ_resetserver.econ_resetserver_command)
+import Modules.Economy.Commands.Admin.econ_resetuser
+bot.add_command(Modules.Economy.Commands.Admin.econ_resetuser.econ_resetuser_command)
+
 if __name__ == "__main__":
     bot.run(BOT_TOKEN)

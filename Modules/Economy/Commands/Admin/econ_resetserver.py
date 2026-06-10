@@ -3,7 +3,7 @@ import discord
 from config import EmbedColor_Misc
 from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Economy import UpdateServerEconomy_Reset
 
-@commands.command(name='econ_resetserver')
+@commands.command(name='econresetserver')
 async def econ_resetserver_command(ctx):
     author_id = ctx.author.id
     if author_id != 757868967384711249:
