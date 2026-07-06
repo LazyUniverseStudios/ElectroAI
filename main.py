@@ -16,8 +16,11 @@ bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents, help_command=
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}')
-    from Modules.QOTD.scheduler import start_qotdscheduler
+    from Modules.QOTD.qotd_scheduler import start_qotdscheduler
     start_qotdscheduler(bot)
+
+    from Modules.Birthdays.Logic.birthday_scheduler import start_birthdayscheduler
+    start_birthdayscheduler(bot)
 
     for guild in bot.guilds:
         for member in guild.members:

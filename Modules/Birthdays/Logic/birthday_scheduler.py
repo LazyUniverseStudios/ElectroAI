@@ -23,3 +23,11 @@ async def birthday_check(client):
             embed = discord.Embed(title="Happy Birthday!", description=f"Happy Birthday {target.mention}! 🎉🎂", color=EmbedColor)
             await channel.send(pingrole.mention, embed=embed)
             print(f"Sent birthday message for {target.name} ({target.id})")
+
+def start_birthdayscheduler(client):
+    @scheduler.scheduled_job('cron', hour=0, minute=0)
+    async def scheduled_job():
+        await birthday_check(client)
+
+    if not scheduler.running:
+        scheduler.start()
