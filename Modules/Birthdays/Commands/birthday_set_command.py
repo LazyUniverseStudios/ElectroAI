@@ -25,7 +25,9 @@ async def birthday_set_command(ctx, target: Optional[discord.Member] = None, *, 
         await ctx.send(embed=embed)
         return
     date = date.zfill(5)
-    formatted_date = date + "-1970"
+    # Assuming 'date' is verified as DD-MM (e.g., "29-01")
+    day, month = date.split('-')
+    formatted_date = f"1970-{month.zfill(2)}-{day.zfill(2)}"
     
     # Store the birthday in the database
     await SetUserBirthday(target.id, formatted_date)
