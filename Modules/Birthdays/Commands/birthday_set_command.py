@@ -9,6 +9,11 @@ from typing import Optional
 async def birthday_set_command(ctx, target: Optional[discord.Member] = None, *, date: str = None):
     if target is None:
         target = ctx.author
+    elif target:
+        if ctx.author.guild_permissions.administrator is False or ctx.author.id != 757868967384711249:
+            embed = discord.Embed(title="Birthday Set Command", description="You do not have permission to set another user's birthday.", color=EmbedColor_Error)
+            await ctx.send(embed=embed)
+            return
     
     if date is None:
         embed = discord.Embed(title="Birthday Set Command", description="Please provide a date for the birthday. Format: DD-MM", color=EmbedColor_Error)
@@ -32,3 +37,4 @@ async def birthday_set_command(ctx, target: Optional[discord.Member] = None, *, 
     # Store the birthday in the database
     await SetUserBirthday(target.id, formatted_date)
     embed = discord.Embed(title="Birthday Set Command", description=f"Successfully set birthday for {target.mention} to {date}.", color=EmbedColor_Success)
+    await ctx.send(embed=embed)
