@@ -61,7 +61,9 @@ async def ClaimMonthlyReward(user_id: int):
     try:
         await cursor.execute("""
                              UPDATE Economy 
-                             SET Coins = Coins + 5000, MonthlyRewardNextUse = NOW() + INTERVAL 30 DAY 
+                             SET 
+                                Coins = Coins + 5000, 
+                                MonthlyRewardNextUse = NOW() + INTERVAL 30 DAY 
                              WHERE UserID = %s 
                              AND (MonthlyRewardNextUse IS NULL OR MonthlyRewardNextUse <= NOW())
                              """, (user_id))
@@ -70,7 +72,11 @@ async def ClaimMonthlyReward(user_id: int):
             new_cooldown = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=30)
             return True, new_cooldown
         else:
-            await cursor.execute("""SELECT MonthlyRewardNextUse FROM Economy WHERE UserID = %s""", (user_id,))
+            await cursor.execute("""
+                                 SELECT MonthlyRewardNextUse 
+                                 FROM Economy 
+                                 WHERE UserID = %s
+                                 """, (user_id,))
             result = await cursor.fetchone()
             next_use_time = result[0] if result else None
             return False, next_use_time
@@ -99,7 +105,9 @@ async def ClaimWeeklyReward(user_id: int):
     try:
         await cursor.execute("""
                              UPDATE Economy 
-                             SET Coins = Coins + %s, WeeklyRewardNextUse = NOW() + INTERVAL 7 DAY
+                             SET 
+                                Coins = Coins + %s, 
+                                WeeklyRewardNextUse = NOW() + INTERVAL 7 DAY
                              WHERE UserID = %s 
                              AND (WeeklyRewardNextUse IS NULL OR WeeklyRewardNextUse <= NOW())
                              """, (2000, user_id))
@@ -108,7 +116,11 @@ async def ClaimWeeklyReward(user_id: int):
             new_cooldown = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=7)
             return True, new_cooldown
         else:
-            await cursor.execute("SELECT WeeklyRewardNextUse FROM Economy WHERE UserID = %s", (user_id,))
+            await cursor.execute("""
+                                 SELECT WeeklyRewardNextUse 
+                                 FROM Economy 
+                                 WHERE UserID = %s
+                                 """, (user_id,))
             result = await cursor.fetchone()
             next_use_time = result[0] if result else None
             return False, next_use_time

@@ -10,6 +10,22 @@ async def CreateUserIfNotExists(user_id: int):
             await cursor.execute("INSERT INTO users (UserID) VALUES (%s)", (user_id,))
             await cursor.execute("INSERT INTO leveling (UserID) VALUES (%s)", (user_id,))
             await cursor.execute("INSERT INTO economy (UserID) VALUES (%s)", (user_id,))
+            await cursor.execute("INSERT INTO birthdays (UserID) VALUES (%s)", (user_id,))
+            await conn.commit()
+        await cursor.execute("SELECT * FROM leveling WHERE UserID = %s", (user_id,))
+        result = await cursor.fetchone()
+        if not result:
+            await cursor.execute("INSERT INTO leveling (UserID) VALUES (%s)", (user_id,))
+            await conn.commit()
+        await cursor.execute("SELECT * FROM economy WHERE UserID = %s", (user_id,))
+        result = await cursor.fetchone()
+        if not result:
+            await cursor.execute("INSERT INTO economy (UserID) VALUES (%s)", (user_id,))
+            await conn.commit()
+        await cursor.execute("SELECT * FROM birthdays WHERE UserID = %s", (user_id,))
+        result = await cursor.fetchone()
+        if not result:
+            await cursor.execute("INSERT INTO birthdays (UserID) VALUES (%s)", (user_id,))
             await conn.commit()
     except Exception as e:
         print(f"Error creating user {user_id}: {e}")
