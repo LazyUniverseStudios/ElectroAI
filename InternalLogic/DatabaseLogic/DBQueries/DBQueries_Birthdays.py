@@ -12,3 +12,17 @@ async def SetUserBirthday(user_id: int, birthday: str):
     finally:
         await cursor.close()
         conn.close()
+
+async def FetchTodaysBirthdays(day : str):
+    conn = await DB_GetConnection()
+    cursor = await conn.cursor()
+    try:
+        await cursor.execute("""SELECT UserID FROM birthdays WHERE Birthday = %s""", (day,))
+        result = await cursor.fetchall()
+        return [row[0] for row in result]
+    except Exception as e:
+        print(f"Error fetching today's birthdays: {e}")
+        return []
+    finally:
+        await cursor.close()
+        conn.close()
