@@ -92,5 +92,9 @@ bot.add_command(Modules.Economy.Commands.Admin.econ_resetserver.econ_resetserver
 import Modules.Economy.Commands.Admin.econ_resetuser
 bot.add_command(Modules.Economy.Commands.Admin.econ_resetuser.econ_resetuser_command)
 
+
+import Modules.Birthdays.Commands.birthday_set_command
+bot.add_command(Modules.Birthdays.Commands.birthday_set_command.birthday_set_command)
+
 if __name__ == "__main__":
     bot.run(BOT_TOKEN)

@@ -1,9 +1,12 @@
 from discord.ext import commands
 import discord
 from config import EmbedColor_Error
+from config import EmbedColor_Success
+from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Birthdays import SetUserBirthday
+from typing import Optional
 
 @commands.command(name='birthdayset')
-async def birthday_set_command(ctx, target: discord.User = None, *, date: str = None):
+async def birthday_set_command(ctx, target: Optional[discord.Member] = None, *, date: str = None):
     if target is None:
         target = ctx.author
     
@@ -21,5 +24,9 @@ async def birthday_set_command(ctx, target: discord.User = None, *, date: str = 
         embed = discord.Embed(title="Birthday Set Command", description="Invalid date format. Please use DD-MM format.", color=EmbedColor_Error)
         await ctx.send(embed=embed)
         return
+    date = date.zfill(5)
+    formatted_date = date + "-1970"
     
-    
+    # Store the birthday in the database
+    await SetUserBirthday(target.id, formatted_date)
+    embed = discord.Embed(title="Birthday Set Command", description=f"Successfully set birthday for {target.mention} to {date}.", color=EmbedColor_Success)
