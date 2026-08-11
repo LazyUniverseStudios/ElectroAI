@@ -1,3 +1,5 @@
+DROP SCHEMA IF EXISTS `ElectroAI`;
+
 CREATE SCHEMA `ElectroAI`;
 
 SET time_zone = '+00:00';
@@ -50,10 +52,7 @@ CREATE TABLE `ElectroAI`.`Moderation` (
 
 CREATE TABLE `ElectroAI`.`Birthdays` (
     `UserID` BIGINT UNSIGNED NOT NULL,
-    `BirthDay` TINYINT UNSIGNED NOT NULL,
-    `BirthMonth` TINYINT UNSIGNED NOT NULL,
-    `ShowYear` BOOLEAN DEFAULT FALSE,
-    `BirthYear` SMALLINT UNSIGNED,
+    `Birthday` TINYINT UNSIGNED,
 
     PRIMARY KEY (`UserID`),
     CONSTRAINT `fk_birthdays_uid`
@@ -70,12 +69,88 @@ CREATE TABLE `ElectroAI`.`Reminders` (
     `ReminderTime` TIMESTAMP NOT NULL,
 
     PRIMARY KEY (`ReminderID`),
-)
+    CONSTRAINT `fk_reminders_uid`
+        FOREIGN KEY (`UserID`)
+        REFERENCES `ElectroAI`.`Users` (`UserID`)
+        ON DELETE CASCADE
+);
 
-CREATE TABLE `ElectroAI`.`CommandCooldowns` (
+
+    
+CREATE TABLE `ElectroAI`.`Family` (
     `UserID` BIGINT UNSIGNED NOT NULL,
-    `CommandName` VARCHAR(32) NOT NULL,
-    `CooldownEndTime` TIMESTAMP NOT NULL,
+    `ParentID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Partner1ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Partner2ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Child1ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Child2ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Child3ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Child4ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Child5ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Child6ID` BIGINT UNSIGNED NULL DEFAULT NULL,
 
     PRIMARY KEY (`UserID`),
-)
+
+    CONSTRAINT `fk_family_uid`
+        FOREIGN KEY (`UserID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`)
+        ON DELETE CASCADE,
+        
+    CONSTRAINT `fk_family_parent`
+        FOREIGN KEY (`ParentID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`)
+        ON DELETE SET NULL,
+
+    CONSTRAINT `fk_family_partner1` 
+        FOREIGN KEY (`Partner1ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL,
+    CONSTRAINT `fk_family_partner2` 
+        FOREIGN KEY (`Partner2ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL,
+
+    CONSTRAINT `fk_family_child1` 
+        FOREIGN KEY (`Child1ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL,
+    CONSTRAINT `fk_family_child2` 
+        FOREIGN KEY (`Child2ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL,
+    CONSTRAINT `fk_family_child3` 
+        FOREIGN KEY (`Child3ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL,
+    CONSTRAINT `fk_family_child4` 
+        FOREIGN KEY (`Child4ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL,
+    CONSTRAINT `fk_family_child5` 
+        FOREIGN KEY (`Child5ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL,
+    CONSTRAINT `fk_family_child6` 
+        FOREIGN KEY (`Child6ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL
+);
+
+CREATE TABLE `ElectroAI`.`CustomVCs` (
+    `ChannelID` BIGINT UNSIGNED NOT NULL,
+    `OwnerID` BIGINT UNSIGNED NOT NULL,
+
+    PRIMARY KEY (`ChannelID`)
+);
+
+CREATE TABLE `ElectroAI`.`CustomVCPresets` (
+    `UserID` BIGINT UNSIGNED NOT NULL,
+    `ChannelName` VARCHAR(32),
+    `ChannelUserLimit` TINYINT UNSIGNED,
+
+    PRIMARY KEY (`UserID`),
+    CONSTRAINT `fk_customvcpresets_uid`
+        FOREIGN KEY (`UserID`)
+        REFERENCES `ElectroAI`.`Users` (`UserID`)
+        ON DELETE CASCADE
+);
