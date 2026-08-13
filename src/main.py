@@ -5,6 +5,7 @@ import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from db_manage_users import CreateUserIfNotExists, BackfillUsers
 from modules.birthdays.logic.scheduler_BirthdayChecker import birthdayCheck
+from modules.qotd.logic.scheduler_QOTD import qotd
 
 from discord.ext import commands
 
@@ -30,6 +31,14 @@ async def setup_hook():
         print("Birthday checker started successfully.")
     except Exception as e:
         print(f"Error occurred while scheduling birthday checker: {e}")
+
+    # Schedules the Question of the Day to run daily at 17:00:00 and starts the scheduler.
+    try:
+        scheduler.add_job(qotd, 'cron', hour=17, minute=0, second=0, args=[bot])
+        scheduler.start()
+        print("QOTD scheduler started successfully.")
+    except Exception as e:
+        print(f"Error occurred while scheduling QOTD scheduler: {e}")
 
     # Backfills existing users across the database, ensuring that all users are inserted into new dependent tables.
     await BackfillUsers()

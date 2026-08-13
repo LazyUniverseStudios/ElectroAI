@@ -1,8 +1,8 @@
 import random
 
-used_questions = []
+usedQuestions = []
 
-GeneralQuestions = {
+generalQuestions = {
     "aaa": "What is the most 'main character' moment you've ever had?",
     "aab": "If you were a ghost, what minor thing would you do to mildly inconvenience people?",
     "aac": "What is an 'unwritten rule' of the internet that everyone should know?",
@@ -65,7 +65,7 @@ GeneralQuestions = {
     "ach": "If you could add one illegal thing to the 'legal' list, what would it be?"
 }
 
-PressTheButton = {
+pressTheButton = {
     "baa": "Would you press the button? You get $10M, but you can only sleep in 2-hour increments.",
     "bab": "Would you press the button? You become the best at your favorite game, but you can never play any other game again.",
     "bac": "Would you press the button? You can teleport, but only to places you've previously cried in.",
@@ -128,7 +128,7 @@ PressTheButton = {
     "bch": "Would you press the button? You get your dream car for free, but the horn plays a loud, wet fart sound every time you brake."
 }
 
-ReflectionQuestions = {
+reflectionQuestions = {
     "caa": "What is something you've done that your younger self would be proud of?",
     "cab": "If you could change one decision you made in the last year, what would it be?",
     "cac": "What is a 'childish' thing you still enjoy doing?",
@@ -191,7 +191,7 @@ ReflectionQuestions = {
     "cch": "What is one thing you've forgiven someone else for that they don't know about?"
 }
 
-WouldYouRather = {
+wouldYouRather = {
     "daa": "What would you rather? Always have to shout when you speak or always have to whisper?",
     "dab": "What would you rather? Be able to talk to animals or speak every human language?",
     "dac": "What would you rather? Date a Goth Femboy or a Hello Kitty Girl?",
@@ -253,7 +253,7 @@ WouldYouRather = {
     "dcg": "Would you rather? Be able to see through walls or be able to hear through any door?"
 }
 
-GamingAndInternet = {
+gamingAndInternet = {
     "eaa": "What is the first username you ever used, and why was it so cringe?",
     "eab": "If you could live inside one game world for a week, but you might actually die, would you do it? Which game?",
     "eac": "What is the most 'toxic' gamer moment you've witnessed (or been part of)?",
@@ -272,22 +272,22 @@ GamingAndInternet = {
 }
 
 deck_map = {
-    "General Questions": GeneralQuestions,
-    "Press the Button": PressTheButton,
-    "Reflection Questions": ReflectionQuestions,
-    "Would You Rather?": WouldYouRather,
-    "Gaming and Internet": GamingAndInternet
+    "General Questions": generalQuestions,
+    "Press the Button": pressTheButton,
+    "Reflection Questions": reflectionQuestions,
+    "Would You Rather?": wouldYouRather,
+    "Gaming and Internet": gamingAndInternet
 }
 
-def get_random_question():
-    if len(used_questions) >= len(WouldYouRather) + len(ReflectionQuestions) + len(PressTheButton) + len(GeneralQuestions) + len(GamingAndInternet):
-        used_questions.clear()
+def getRandomQuestion():
+    if len(usedQuestions) >= len(wouldYouRather) + len(reflectionQuestions) + len(pressTheButton) + len(generalQuestions) + len(gamingAndInternet):
+        usedQuestions.clear()
     while True:
         deck = random.choice(list(deck_map.keys()))
         questions = deck_map[deck]
-        question_key = random.choice(list(questions.keys()))
-        if question_key not in used_questions:
-            used_questions.append(question_key)
+        questionKey = random.choice(list(questions.keys()))
+        if questionKey not in usedQuestions:
+            usedQuestions.append(questionKey)
             break
-    question = questions[question_key]
-    return deck, question, question_key
+    question = questions[questionKey]
+    return deck, question, questionKey
