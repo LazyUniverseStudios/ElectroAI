@@ -3,6 +3,7 @@ from db_connection import _ActivePool
 async def CreateUserIfNotExists(user_id: int):
     """
     Ensures a user exists across all ElectroAI tables atomically.
+    Uses Trigger Scripts inside the SQL Database to ensure atomic creation.
 
     Args:
         user_id (int): The ID of the user to ensure exists in the database.
