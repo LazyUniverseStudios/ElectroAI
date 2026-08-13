@@ -16,4 +16,3 @@ async def restart_command(ctx):
     await ctx.bot.close()
     subprocess.Popen([sys.executable] + sys.argv)
     os._exit(0)
-    
