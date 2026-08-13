@@ -1,103 +1,74 @@
 import discord
 import os
 import dotenv
+import asyncio
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from db_manage_users import CreateUserIfNotExists, BackfillUsers
+from modules.birthdays.logic.scheduler_BirthdayChecker import birthdayCheck
 
 from discord.ext import commands
 
-from config import COMMAND_PREFIX
 dotenv.load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-from InternalLogic.DatabaseLogic.DBQueries.DBQueries_Door import CreateUserIfNotExists
-
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents, help_command=None, case_insensitive=True)
+bot = commands.Bot(
+    command_prefix=".", 
+    intents=intents, 
+    help_command=None, 
+    case_insensitive=True)
 
+scheduler = AsyncIOScheduler()
+
+# Runs during the startup of the bot, ensuring it only runs once per session.
+@bot.event
+async def setup_hook():
+    # Schedules the birthday checker to run daily at midnight (00:00:00) and starts the scheduler.
+    try:
+        scheduler.add_job(birthdayCheck, 'cron', hour=0, minute=0, second=0, args=[bot])
+        scheduler.start()
+        print("Birthday checker started successfully.")
+    except Exception as e:
+        print(f"Error occurred while scheduling birthday checker: {e}")
+
+    # Backfills existing users across the database, ensuring that all users are inserted into new dependent tables.
+    await BackfillUsers()
+
+    # Listener Registration
+    ## Boost Listener
+    ### Registers the 'on_boost' function as a listener for the 'on_message' event.
+    from modules.listeners.listeners.boosts import on_boost
+    bot.add_listener(on_boost, 'on_message')
+    ## Join Listener
+    from modules.listeners.listeners.joins import on_member_join
+    bot.add_listener(on_member_join, 'on_member_join')
+    ## Leave Listener
+    from modules.listeners.listeners.leaves import on_member_remove
+    bot.add_listener(on_member_remove, 'on_member_remove')
+
+# Runs when the bot is ready and connected to Discord
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name} - {bot.user.id}')
-    from Modules.QOTD.qotd_scheduler import start_qotdscheduler
-    start_qotdscheduler(bot)
+    # Outputs the bot's username and ID to the console
+    print(f'Logged in as {bot.user.name} (ID: {bot.user.id})')
+    print('------')
 
-    from Modules.Birthdays.Logic.birthday_scheduler import start_birthdayscheduler
-    start_birthdayscheduler(bot)
-
+    # Iterates through all members, and inserting them into the database's Users table if they don't already exist.
+    # This ensures that all members are accounted for in the database, even if they joined while the bot was offline.
+    # Insertion activates a trigger, syncing new user IDs across dependent tables
     for guild in bot.guilds:
         for member in guild.members:
             if not member.bot:
                 await CreateUserIfNotExists(member.id)
 
+# Listens for messages in the server.
 @bot.event
 async def on_message(message):
-    if message.author == bot.user:
+    # Ignores messages sent by bots to prevent feedback loops or unnecessary processing
+    if message.author.bot:
         return
+
+    # Processes commands if the message is a command
     await bot.process_commands(message)
 
-import Modules.Listeners.joins
-bot.add_listener(Modules.Listeners.joins.on_member_join)
-import Modules.Listeners.leaves
-bot.add_listener(Modules.Listeners.leaves.on_member_remove)
-import Modules.Listeners.boosts
-bot.add_listener(Modules.Listeners.boosts.on_message)
-
-
-import Modules.Misc.UserCommands.help_command
-bot.add_command(Modules.Misc.UserCommands.help_command.help_command)
-import Modules.Misc.UserCommands.ping_command
-bot.add_command(Modules.Misc.UserCommands.ping_command.ping_command)
-
-import Modules.Misc.AdminCommands.restart
-bot.add_command(Modules.Misc.AdminCommands.restart.restart_command)
-
-
-import Modules.Moderation.Commands.Punishments.ban_command
-bot.add_command(Modules.Moderation.Commands.Punishments.ban_command.ban_command)
-import Modules.Moderation.Commands.Punishments.kick_command
-bot.add_command(Modules.Moderation.Commands.Punishments.kick_command.kick_command)
-import Modules.Moderation.Commands.Punishments.timeout_command
-bot.add_command(Modules.Moderation.Commands.Punishments.timeout_command.timeout_command)
-import Modules.Moderation.Commands.Punishments.Warns.warn_command
-bot.add_command(Modules.Moderation.Commands.Punishments.Warns.warn_command.warn_command)
-import Modules.Moderation.Commands.Punishments.unban_command
-bot.add_command(Modules.Moderation.Commands.Punishments.unban_command.unban_command)
-import Modules.Moderation.Commands.Punishments.untimeout_command
-bot.add_command(Modules.Moderation.Commands.Punishments.untimeout_command.untimeout_command)
-import Modules.Moderation.Commands.Punishments.Warns.unwarn_command
-bot.add_command(Modules.Moderation.Commands.Punishments.Warns.unwarn_command.unwarn_command)
-
-import Modules.Moderation.Commands.Channels.purge_command
-import Modules.Moderation.Commands.Channels.lock_command
-import Modules.Moderation.Commands.Channels.unlock_command
-
-import Modules.Moderation.Commands.Cases.cases_command
-import Modules.Moderation.Commands.Cases.case_delete_command
-import Modules.Moderation.Commands.Cases.case_info_command
-import Modules.Moderation.Commands.Cases.case_edit_command
-
-
-import Modules.Economy.Commands.Balance.balance_command
-bot.add_command(Modules.Economy.Commands.Balance.balance_command.balance_command)
-
-import Modules.Economy.Commands.TimeRewards.daily_reward_command
-bot.add_command(Modules.Economy.Commands.TimeRewards.daily_reward_command.daily_reward_command)
-import Modules.Economy.Commands.TimeRewards.weekly_reward_command
-bot.add_command(Modules.Economy.Commands.TimeRewards.weekly_reward_command.weekly_reward_command)
-import Modules.Economy.Commands.TimeRewards.monthly_reward_command
-bot.add_command(Modules.Economy.Commands.TimeRewards.monthly_reward_command.monthly_reward_command)
-
-import Modules.Economy.Commands.Transaction.shop_command
-
-import Modules.Economy.Commands.Gambling.coinflip_command
-bot.add_command(Modules.Economy.Commands.Gambling.coinflip_command.coinflip_command)
-
-import Modules.Economy.Commands.Admin.econ_resetserver
-bot.add_command(Modules.Economy.Commands.Admin.econ_resetserver.econ_resetserver_command)
-import Modules.Economy.Commands.Admin.econ_resetuser
-bot.add_command(Modules.Economy.Commands.Admin.econ_resetuser.econ_resetuser_command)
-
-
-import Modules.Birthdays.Commands.birthday_set_command
-bot.add_command(Modules.Birthdays.Commands.birthday_set_command.birthday_set_command)
-
-if __name__ == "__main__":
-    bot.run(BOT_TOKEN)
+bot.run(BOT_TOKEN)
