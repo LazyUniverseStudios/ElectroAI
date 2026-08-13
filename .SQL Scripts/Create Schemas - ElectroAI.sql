@@ -1,16 +1,14 @@
-DROP SCHEMA IF EXISTS `ElectroAI`;
-
-CREATE SCHEMA `ElectroAI`;
+CREATE SCHEMA IF NOT EXISTS `ElectroAI`;
 
 SET time_zone = '+00:00';
 
-CREATE TABLE `ElectroAI`.`Users` (
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`Users` (
     `UserID` BIGINT UNSIGNED NOT NULL,
 
     PRIMARY KEY (`UserID`)
 );
 
-CREATE TABLE `ElectroAI`.`Leveling`(
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`Leveling`(
     `UserID` BIGINT UNSIGNED NOT NULL,
     `Level` BIGINT UNSIGNED NOT NULL DEFAULT 0,
     `XP` BIGINT UNSIGNED NOT NULL DEFAULT 0,
@@ -24,7 +22,7 @@ CREATE TABLE `ElectroAI`.`Leveling`(
         ON DELETE CASCADE
 );
 
-CREATE TABLE `ElectroAI`.`Economy` (
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`Economy` (
     `UserID` BIGINT UNSIGNED NOT NULL,
     `Coins` BIGINT UNSIGNED NOT NULL DEFAULT 0,
     `DailyRewardNextUse` TIMESTAMP DEFAULT NULL,
@@ -38,7 +36,7 @@ CREATE TABLE `ElectroAI`.`Economy` (
         ON DELETE CASCADE
 );
 
-CREATE TABLE `ElectroAI`.`Moderation` (
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`Moderation` (
     `CaseID` CHAR(6) NOT NULL,
     `CaseType` CHAR(12) NOT NULL,
     `ModeratorID` BIGINT UNSIGNED NOT NULL,
@@ -50,7 +48,7 @@ CREATE TABLE `ElectroAI`.`Moderation` (
     PRIMARY KEY (`CaseID`)
 );
 
-CREATE TABLE `ElectroAI`.`Birthdays` (
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`Birthdays` (
     `UserID` BIGINT UNSIGNED NOT NULL,
     `Birthday` TINYINT UNSIGNED,
 
@@ -61,7 +59,7 @@ CREATE TABLE `ElectroAI`.`Birthdays` (
         ON DELETE CASCADE
 );
 
-CREATE TABLE `ElectroAI`.`Reminders` (
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`Reminders` (
     `ReminderID` CHAR(6) NOT NULL,
     `UserID` BIGINT UNSIGNED NOT NULL,
     `ReminderName` VARCHAR(32) NOT NULL,
@@ -77,7 +75,7 @@ CREATE TABLE `ElectroAI`.`Reminders` (
 
 
     
-CREATE TABLE `ElectroAI`.`Family` (
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`Family` (
     `UserID` BIGINT UNSIGNED NOT NULL,
     `ParentID` BIGINT UNSIGNED NULL DEFAULT NULL,
     `Partner1ID` BIGINT UNSIGNED NULL DEFAULT NULL,
@@ -136,14 +134,14 @@ CREATE TABLE `ElectroAI`.`Family` (
         ON DELETE SET NULL
 );
 
-CREATE TABLE `ElectroAI`.`CustomVCs` (
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`CustomVCs`(
     `ChannelID` BIGINT UNSIGNED NOT NULL,
     `OwnerID` BIGINT UNSIGNED NOT NULL,
 
     PRIMARY KEY (`ChannelID`)
 );
 
-CREATE TABLE `ElectroAI`.`CustomVCPresets` (
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`CustomVCPresets`(
     `UserID` BIGINT UNSIGNED NOT NULL,
     `ChannelName` VARCHAR(32),
     `ChannelUserLimit` TINYINT UNSIGNED,
@@ -154,3 +152,29 @@ CREATE TABLE `ElectroAI`.`CustomVCPresets` (
         REFERENCES `ElectroAI`.`Users` (`UserID`)
         ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`CustomRole` (
+    `RoleID` BIGINT UNSIGNED NOT NULL,
+    `UserID` BIGINT UNSIGNED UNIQUE NOT NULL,
+
+    PRIMARY KEY (`RoleID`),
+    CONSTRAINT `fk_customrole_uid`
+        FOREIGN KEY (`UserID`)
+        REFERENCES `ElectroAI`.`Users` (`UserID`)
+        ON DELETE CASCADE
+);
+
+DROP TRIGGER IF EXISTS `ElectroAI`.`Users_AFTER_INSERT`;
+DELIMITER $$
+CREATE TRIGGER `ElectroAI`.`Users_AFTER_INSERT` 
+AFTER INSERT ON `ElectroAI`.`Users`
+FOR EACH ROW
+BEGIN
+    INSERT INTO `ElectroAI`.`Leveling` (`UserID`) VALUES (NEW.`UserID`);
+    INSERT INTO `ElectroAI`.`Economy` (`UserID`) VALUES (NEW.`UserID`);
+    INSERT INTO `ElectroAI`.`Birthdays` (`UserID`) VALUES (NEW.`UserID`);
+    INSERT INTO `ElectroAI`.`Family` (`UserID`) VALUES (NEW.`UserID`);
+    INSERT INTO `ElectroAI`.`CustomVCPresets` (`UserID`) VALUES (NEW.`UserID`);
+END;
+$$
+DELIMITER ;
