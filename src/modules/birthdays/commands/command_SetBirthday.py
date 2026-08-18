@@ -1,10 +1,12 @@
 import discord
 
+from discord import Embed
 from discord.ext import commands
 from typing import Optional
 
+from modules.birthdays.db.set_UserBirthday import setUserBirthday
+
 from config import embedColor
-from modules.birthdays.db.set_user_birthday import setUserBirthday
 
 @commands.command(name="birthdayset", aliases=["bdayset", "setbday"])
 async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: str = None):
@@ -19,7 +21,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
     # Checking if user has permission to set birthdays for others
     if ctx.author.id != 757868967384711249:
         if target is not None and target.id != ctx.author.id:
-            embed = discord.Embed(
+            embed = Embed(
                 title="Error: Insufficient Permissions",
                 description="You do not have permission to set birthdays for other users.",
                 color=embedColor.ERROR.value
@@ -34,7 +36,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
     
     # Check Birthday Exists
     if birthday is None:
-        embed = discord.Embed(
+        embed = Embed(
             title="Error: No Birthday Provided",
             description="Please provide a birthday in the format DD-MM.",
             color=embedColor.ERROR.value
@@ -59,7 +61,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
         else:
             raise ValueError
     except ValueError:
-        embed = discord.Embed(
+        embed = Embed(
             title="Error: Invalid Birthday Format",
             description="Please provide a valid birthday in the format DD-MM.",
             color=embedColor.ERROR.value
@@ -75,7 +77,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
     success = await setUserBirthday(target.id, formatted_birthday)
 
     if success:
-        embed = discord.Embed(
+        embed = Embed(
             title="Birthday Set Successfully",
             description=f"{target.mention}'s birthday has been set to {day:02d}-{month:02d}.",
             color=embedColor.SUCCESS.value
@@ -83,7 +85,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
         embed.set_footer(text=".birthdayset")
         await ctx.send(embed=embed)
     else:
-        embed=discord.Embed(
+        embed=Embed(
             title="Error: Could Not Set Birthday",
             description="There was an error while trying to set the birthday. Please try again later, or contact <@757868967384711249> if the issue persists.",
             color=embedColor.ERROR.value)

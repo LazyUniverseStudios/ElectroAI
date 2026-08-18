@@ -20,14 +20,14 @@ async def monthly_reward(ctx):
         embed = discord.Embed(
             title="Database Error", 
             description="I couldn't reach the database. Please try again in a few moments, or contact <@757868967384711249> if the issue persists.", 
-            color=embedColor.ERROR.value
+            color=embedColor["ERROR"]
         )
     elif success is True:
         unix_timestamp = int(next_use_time.timestamp())
         embed = discord.Embed(
             title="Reward Claimed!", 
             description=f"You've received 5,000 coins!\nYour next reward is available <t:{unix_timestamp}:R>.", 
-            color=embedColor.DEFAULT.value
+            color=embedColor["DEFAULT"]
         )
         embed.set_footer(text="Come back tomorrow!")
     elif success is False:
@@ -35,7 +35,7 @@ async def monthly_reward(ctx):
             embed = discord.Embed(
                 title="Database Error", 
                 description="I couldn't reach the database. Please try again in a few moments, or contact <@757868967384711249> if the issue persists.", 
-                color=embedColor.ERROR.value
+                color=embedColor["ERROR"]
             )
         elif next_use_time:
             unix_timestamp = int(next_use_time.timestamp())
@@ -46,6 +46,6 @@ async def monthly_reward(ctx):
         embed = discord.Embed(
             title="On Cooldown", 
             description=cooldown_msg, 
-            color=embedColor.ERROR.value
+            color=embedColor["ERROR"]
         )
     await ctx.send(embed=embed)

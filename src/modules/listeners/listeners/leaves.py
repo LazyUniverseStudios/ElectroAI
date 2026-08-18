@@ -4,7 +4,7 @@ from db_manage_users import DropUser
 from config import embedColor
 
 async def on_member_remove(member):
-    embed = Embed(title="Goodbye!", description=f"We're sad to see you go, {member.mention}.", color=embedColor.DEFAULT.value)
+    embed = Embed(title="Goodbye!", description=f"We're sad to see you go, {member.mention}.", color=embedColor["DEFAULT"])
     embed.set_thumbnail(url=member.avatar.url if member.avatar else member.default_avatar.url)
     embed.add_field(name="Farewell!", value="Thank you for being part of our community!", inline=False)
     embed.add_field(name="Stay Connected!", value="Feel free to rejoin us anytime!", inline=False)

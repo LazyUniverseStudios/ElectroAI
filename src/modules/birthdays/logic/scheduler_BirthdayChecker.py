@@ -1,10 +1,13 @@
 import discord
 
-from datetime import datetime
+from datetime import datetime, timedelta
+
+from modules.birthdays.db.fetch_BirthdaysToday import fetchTodaysBirthdays
 
 from config import embedColor
-from modules.birthdays.db.fetch_todays_birthdays import fetchTodaysBirthdays
+from config import serverIdentityIDs, channelIDs, roleIDs
 
+global birthdayRoleUsers
 
 async def birthdayCheck(bot):
     """
@@ -13,10 +16,13 @@ async def birthdayCheck(bot):
     Args:
         bot: The Discord bot instance.
     """
-    guild = bot.get_guild(1216146656878133429) # Electro Cafe Guild
-    channelA = guild.get_channel(1523831931710738544) # Birthday Channel
-    channelB = guild.get_channel(1480599558642728990) # Main Lounge Chat Channel
-    pingRole = guild.get_role(1412101967144026142) # Birthday Ping Role
+    guild = bot.get_guild(serverIdentityIDs.GUILD.value) # Electro Cafe Guild
+    channelA = guild.get_channel(channelIDs.BIRTHDAY_CHANNEL.value) # Birthday Channel
+    channelB = guild.get_channel(channelIDs.GENERAL_CHAT_CHANNEL.value) # Main Lounge Chat Channel
+    pingRole = guild.get_role(roleIDs.BIRTHDAY_PING_ROLE.value) # Birthday Ping Role
+    birthdayRole = guild.get_role(roleIDs.BIRTHDAY_ROLE.value) # Birthday Role
+
+    birthdayRoleUsers = []
 
     today = datetime.now().strftime("%m-%d")
     formattedToday = f"1970-{today}"
@@ -42,5 +48,32 @@ async def birthdayCheck(bot):
                     embed.set_thumbnail(url=user.avatar.url)
                 await channelA.send(embed=embed, content=f"{pingRole.mention}")
                 await channelB.send(embed=embed)
+                await user.add_roles(birthdayRole, reason="Birthday Role Assignment")
+                birthdayRoleUsers.append([user.id, datetime.now().strftime("%Y-%m-%d")])
 
+async def birthdayRoleRemove(bot: discord.Client):
+    """
+    Removes the birthday role from anyone whose birthday is not today.
+    Survives bot restarts without needing in-memory tracking.
+    """
+    guild = bot.get_guild(serverIdentityIDs.GUILD.value)
+    if not guild:
+        return
 
+    birthdayRole = guild.get_role(roleIDs.BIRTHDAY_ROLE.value)
+    if not birthdayRole:
+        return
+
+    today = datetime.now().strftime("%m-%d")
+    formattedToday = f"1970-{today}"
+
+    try:
+        birthdaysToday = await fetchTodaysBirthdays(formattedToday)
+    except Exception as e:
+        print(f"Error fetching birthdays for role cleanup: {e}")
+        birthdaysToday = []
+
+    # Strip the role from anyone who currently has it but isn't on today's list
+    for member in list(birthdayRole.members):
+        if member.id not in birthdaysToday:
+            await member.remove_roles(birthdayRole, reason="Birthday Role Expiration")

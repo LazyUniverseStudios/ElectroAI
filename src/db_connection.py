@@ -1,6 +1,10 @@
 import aiomysql as amysql
 import os
-import config
+import dotenv
+
+from config import POOL_MIN_SIZE, POOL_MAX_SIZE
+
+dotenv.load_dotenv()  # Load environment variables from .env file
 
 DB_ADDRESS = os.getenv("DB_ADDRESS")
 DB_PORT = int(os.getenv("DB_PORT"))
@@ -30,8 +34,8 @@ async def createPool():
                 password=DB_PASSWORD,
                 db=DB_NAME,
 
-                minsize=config.POOL_MIN_SIZE,
-                maxsize=config.POOL_MAX_SIZE
+                minsize=POOL_MIN_SIZE,
+                maxsize=POOL_MAX_SIZE
             )
             return _ActivePool
         except Exception as e:

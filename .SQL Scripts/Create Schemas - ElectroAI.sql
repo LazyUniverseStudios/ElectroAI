@@ -164,6 +164,13 @@ CREATE TABLE IF NOT EXISTS `ElectroAI`.`CustomRole` (
         ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `ElectroAI`.`Persistent_Messages` (
+    `MessageID` BIGINT UNSIGNED NOT NULL,
+    `MessagePurpose` VARCHAR(32) NOT NULL,
+
+    PRIMARY KEY (`MessagePurpose`)
+)
+
 DROP TRIGGER IF EXISTS `ElectroAI`.`Users_AFTER_INSERT`;
 DELIMITER $$
 CREATE TRIGGER `ElectroAI`.`Users_AFTER_INSERT` 

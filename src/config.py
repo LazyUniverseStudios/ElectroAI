@@ -11,7 +11,9 @@ embedColor = {
     "ERROR": 0xCB2821, # Embed color for error messages
     "SUCCESS": 0x21CB28, # Embed color for success messages
     "MISC": 0x000001, # Miscellaneous embed color
-    "BIRTHDAY": 0xFFD700 # Embed color for birthday messages
+    "BIRTHDAY": 0xFFD700, # Embed color for birthday messages
+    "CONFESSION" : 0x9D4EDD, # Embed Color for confession submissions
+    "BOOST": 0xF47FFF # Embed Color for Boost Messages
 }
 
 # Bot Identity IDs
@@ -39,7 +41,7 @@ channelIDs = {
 
 # Role IDs
 roleIDs = {
-    "BASE_MEMBER_ROLE": 1412101472438452306, # Base Member Role ID
+    "BASE_MEMBER_ROLE": 1412101472438452306, # ".gg/electrocafe" | Base Member Role ID, All Humans have this role by default.
     "MEMBER_PING_SEPERATOR": 1412101886001020929, # Member Ping Seperator Role ID
     "MEMBER_PROFILE_SEPERATOR": 1412101535227183176, # Member Profile Seperator Role ID
     "BASE_BOT_ROLE": 1412101520786329711, # Base Bot Role ID
@@ -60,5 +62,24 @@ roleIDs = {
         "LEVEL_130": 1412100917670449283, # Level 130
         "LEVEL_140": 1412100893066788956, # Level 140
         "LEVEL_150": 1412100878151979159, # Level 150
-    }
+    },
+    "STAFF_ROLES": {
+        "LEAD_MANAGEMENT": 1412099637032255518,
+        "MANAGER": 1412099673975554132,
+        "PARTNERSHIP_MANAGER": 1412099702073327798,
+        "EVENT_MANAGER": 1412099739037466755,
+        "TICKET_MANAGER": 1412099771388395741,
+        "HEAD_ADMIN": 1412099820453232721,
+        "ADMIN": 1412099853374193714,
+        "HEAD_MODERATOR": 1412099909779456083,
+        "MODERATOR": 1412099881526493214,
+        "TRIAL_MODERATOR": 1412099948446617652,
+        "STAFF_BASE": 1412099992818286835, # "Staff Team"
+        "EVENT_STAFF_BASE": 1412100011575214153 # "Event Team"
+    },
+    "BIRTHDAY_ROLE": 1538506580486656022, # Birthday Role ID
+    "BIRTHDAY_PING_ROLE": 1412101967144026142, # Birthday Ping Role ID
+    "BUMP_PING_ROLE": 1412101940292222986, # Bump Ping Role ID
+    "GIVEAWAY_PING_ROLE": 1412102063445512282, # Giveaway Ping Role ID
+    "QOTD_PING_ROLE": 1412102087663157360, # Question of the Day Ping Role ID
 }
