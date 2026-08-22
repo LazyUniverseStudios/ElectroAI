@@ -1,4 +1,4 @@
-from db_connection import _ActivePool
+import db_connection
 
 async def set_ConfessionPersistence(messageID: int):
     """
@@ -11,11 +11,11 @@ async def set_ConfessionPersistence(messageID: int):
 
     MessagePurpose = "Confession_Sticky"
 
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 await cursor.execute("""
-                                    INSERT INTO PersistentMessages (MessageID, MessagePurpose)
+                                    INSERT INTO Persistent_Messages (MessageID, MessagePurpose)
                                     VALUES (%s, %s)
                                     ON DUPLICATE KEY UPDATE MessageID = VALUES(MessageID)
                                     """, (messageID, MessagePurpose))

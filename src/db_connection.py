@@ -41,3 +41,4 @@ async def createPool():
         except Exception as e:
             print(f"Error creating database connection pool: {e}")
             raise e
+            return

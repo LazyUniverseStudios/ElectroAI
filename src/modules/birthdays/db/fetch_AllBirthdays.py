@@ -1,4 +1,4 @@
-from db_connection import _ActivePool
+import db_connection
 
 async def fetchAllBirthdays():
     """
@@ -7,7 +7,7 @@ async def fetchAllBirthdays():
     Returns:
         list: A list of tuples containing user IDs and their birthdays.
     """
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 await cursor.execute("SELECT UserID, Birthday FROM birthdays")

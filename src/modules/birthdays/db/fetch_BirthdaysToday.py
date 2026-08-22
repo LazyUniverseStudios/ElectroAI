@@ -1,4 +1,4 @@
-from db_connection import _ActivePool
+import db_connection
 
 async def fetchTodaysBirthdays(day : str):
     """
@@ -10,7 +10,7 @@ async def fetchTodaysBirthdays(day : str):
     Returns:
         list: A list of user IDs whose birthdays are today.
     """
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 await cursor.execute("SELECT UserID FROM birthdays WHERE Birthday = %s", (day,))

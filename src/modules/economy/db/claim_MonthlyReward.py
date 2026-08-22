@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 
-from db_connection import _ActivePool
+import db_connection
 
 async def claimMonthlyReward(user_id: int):
     """
@@ -12,7 +12,7 @@ async def claimMonthlyReward(user_id: int):
         tuple: A tuple containing a boolean indicating success and the next use time.
     """
 
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 await cursor.execute("""

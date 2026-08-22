@@ -1,4 +1,4 @@
-from db_connection import _ActivePool
+import db_connection
 
 async def setUserBirthday(user_id: int, birthday: str):
     """
@@ -12,7 +12,7 @@ async def setUserBirthday(user_id: int, birthday: str):
         bool: True if the birthday was set successfully, False otherwise.
     """
 
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 await cursor.execute("""

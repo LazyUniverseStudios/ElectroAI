@@ -12,7 +12,7 @@ from modules.birthdays.logic.scheduler_BirthdayChecker import birthdayCheck
 from modules.birthdays.logic.scheduler_BirthdayChecker import birthdayRoleRemove
 from modules.qotd.logic.scheduler_QOTD import qotd
 
-
+from db_connection import createPool
 
 dotenv.load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -26,9 +26,18 @@ bot = commands.Bot(
 
 scheduler = AsyncIOScheduler()
 
+
 # Runs during the startup of the bot, ensuring it only runs once per session.
 @bot.event
 async def setup_hook():
+
+    try:
+        await createPool()  # Create the database connection pool
+        print("Database connection pool created successfully.")
+    except Exception as e:
+            pass
+
+
     dotenv.load_dotenv()
     # Schedules the birthday checker to run daily at midnight (00:00:00).
     try:
@@ -109,6 +118,11 @@ async def setup_hook():
     bot.add_command(rules_embed)
 
 
+    # Confessions Commands
+    from modules.confessions.commands.comamnd_InitializeConfessions import init_confessions
+    bot.add_command(init_confessions)
+
+
     # View Registration
     persistentView = View(timeout=None)
 
@@ -124,6 +138,13 @@ async def setup_hook():
     persistentView.add_item(confess_button)
 
     bot.add_view(persistentView)
+
+    # Confession Modal Creation
+    try:
+        from modules.confessions.db.get_Persistence import getConfessionPersistence
+        await getConfessionPersistence(bot)
+    except Exception as e:
+        print(f"Error occurred while fetching confession persistence: {e}")
 
 # Runs when the bot is ready and connected to Discord
 @bot.event

@@ -1,9 +1,9 @@
-from db_connection import _ActivePool
+import db_connection
 
 from modules.confessions.logic.modal_SubmitConfession import sendConfessionModalMessage
 
 async def getConfessionPersistence(bot):
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             await cursor.execute("SELECT MessageID FROM Persistent_Messages WHERE MessagePurpose = %s", ("Confession_Sticky",))
             result = await cursor.fetchone()

@@ -37,7 +37,7 @@ channelIDs = {
     "BIRTHDAY_CHANNEL": 1523831931710738544, # Birthday Channel ID
     "QOTD_CHANNEL": 1523838557624471625, # Question of the Day Channel ID
     "BOOSTS_CHANNEL": 1427728272560623626, # Boosts Channel ID
-    "CONFESSIONS_CHANNEL": 1538976773365305385, # Confessions Channel ID
+    "CONFESSIONS_CHANNEL": 1540322421071151176, # Confessions Channel ID
 }
 
 # Role IDs

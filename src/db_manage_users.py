@@ -1,4 +1,4 @@
-from db_connection import _ActivePool
+import db_connection
 
 async def CreateUserIfNotExists(user_id: int):
     """
@@ -9,7 +9,7 @@ async def CreateUserIfNotExists(user_id: int):
         user_id (int): The ID of the user to ensure exists in the database.
     """
 
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 await cursor.execute(
@@ -26,7 +26,7 @@ async def DropUser(user_id: int):
     Deletes a user from all ElectroAI tables atomically.
     """
 
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 await cursor.execute("SELECT * FROM users WHERE UserID = %s", (user_id,))
@@ -53,7 +53,7 @@ async def BackfillUsers():
         "CustomVCPresets"
     ]
 
-    async with _ActivePool.acquire() as conn:
+    async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 for table in dependent_tables:
