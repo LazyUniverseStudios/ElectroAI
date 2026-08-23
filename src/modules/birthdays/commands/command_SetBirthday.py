@@ -24,7 +24,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
             embed = Embed(
                 title="Error: Insufficient Permissions",
                 description="You do not have permission to set birthdays for other users.",
-                color=embedColor.ERROR.value
+                color=embedColor["ERROR"]
             )
             embed.set_footer(text=".birthdayset")
             await ctx.send(embed=embed)
@@ -39,7 +39,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
         embed = Embed(
             title="Error: No Birthday Provided",
             description="Please provide a birthday in the format DD-MM.",
-            color=embedColor.ERROR.value
+            color=embedColor["ERROR"]
         )
         embed.set_footer(text=".birthdayset")
         await ctx.send(embed=embed)
@@ -64,7 +64,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
         embed = Embed(
             title="Error: Invalid Birthday Format",
             description="Please provide a valid birthday in the format DD-MM.",
-            color=embedColor.ERROR.value
+            color=embedColor["ERROR"]
         )
         embed.set_footer(text=".birthdayset")
         await ctx.send(embed=embed)
@@ -80,7 +80,7 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
         embed = Embed(
             title="Birthday Set Successfully",
             description=f"{target.mention}'s birthday has been set to {day:02d}-{month:02d}.",
-            color=embedColor.SUCCESS.value
+            color=embedColor["DEFAULT"]
         )
         embed.set_footer(text=".birthdayset")
         await ctx.send(embed=embed)
@@ -88,6 +88,6 @@ async def birthday_set(ctx, target: Optional[discord.Member] = None, birthday: s
         embed=Embed(
             title="Error: Could Not Set Birthday",
             description="There was an error while trying to set the birthday. Please try again later, or contact <@757868967384711249> if the issue persists.",
-            color=embedColor.ERROR.value)
+            color=embedColor["ERROR"])
         embed.set_footer(text=".birthdayset")
         await ctx.send(embed=embed)

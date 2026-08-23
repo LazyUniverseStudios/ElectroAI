@@ -14,7 +14,7 @@ async def qotd(bot):
     embed = discord.Embed(
         title=f"Question of the Day - {deck}",
         description=question,
-        color=embedColor.DEFAULT.value
+        color=embedColor["DEFAULT"]
     )
     embed.set_footer(text=f"Question ID: {question_key}")
 

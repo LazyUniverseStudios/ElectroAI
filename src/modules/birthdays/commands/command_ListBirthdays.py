@@ -22,7 +22,7 @@ async def list_birthdays(ctx):
             embed = Embed(
                 title="Error: No Birthdays Found",
                 description="No birthdays found in the database or an error connecting to the database.",
-                color=embedColor.ERROR.value
+                color=embedColor["ERROR"]
             )
             await ctx.send(embed=embed)
             return
@@ -49,7 +49,7 @@ async def list_birthdays(ctx):
     embed = Embed(
          title="Birthday List", 
          description=full_description, 
-         color=embedColor.DEFAULT.value
+         color=embedColor["DEFAULT"]
          )
 
     await ctx.send(embed=embed)

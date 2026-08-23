@@ -16,11 +16,11 @@ async def birthdayCheck(bot):
     Args:
         bot: The Discord bot instance.
     """
-    guild = bot.get_guild(serverIdentityIDs.GUILD.value) # Electro Cafe Guild
-    channelA = guild.get_channel(channelIDs.BIRTHDAY_CHANNEL.value) # Birthday Channel
-    channelB = guild.get_channel(channelIDs.GENERAL_CHAT_CHANNEL.value) # Main Lounge Chat Channel
-    pingRole = guild.get_role(roleIDs.BIRTHDAY_PING_ROLE.value) # Birthday Ping Role
-    birthdayRole = guild.get_role(roleIDs.BIRTHDAY_ROLE.value) # Birthday Role
+    guild = bot.get_guild(serverIdentityIDs["GUILD"]) # Electro Cafe Guild
+    channelA = guild.get_channel(channelIDs["BIRTHDAY_CHANNEL"]) # Birthday Channel
+    channelB = guild.get_channel(channelIDs["GENERAL_CHAT_CHANNEL"]) # Main Lounge Chat Channel
+    pingRole = guild.get_role(roleIDs["BIRTHDAY_PING_ROLE"]) # Birthday Ping Role
+    birthdayRole = guild.get_role(roleIDs["BIRTHDAY_ROLE"]) # Birthday Role
 
     birthdayRoleUsers = []
 
@@ -40,7 +40,7 @@ async def birthdayCheck(bot):
                 embed = discord.Embed(
                     title="Happy Birthday! 🎉",
                     description=f"Today is {user.mention}'s birthday! Let's all wish them a fantastic day! 🎂",
-                    color=embedColor.BIRTHDAY.value
+                    color=embedColor["BIRTHDAY"]
                 )
                 if user.guild_avatar:
                     embed.set_thumbnail(url=user.guild_avatar.url)
@@ -56,11 +56,11 @@ async def birthdayRoleRemove(bot: discord.Client):
     Removes the birthday role from anyone whose birthday is not today.
     Survives bot restarts without needing in-memory tracking.
     """
-    guild = bot.get_guild(serverIdentityIDs.GUILD.value)
+    guild = bot.get_guild(serverIdentityIDs["GUILD"])
     if not guild:
         return
 
-    birthdayRole = guild.get_role(roleIDs.BIRTHDAY_ROLE.value)
+    birthdayRole = guild.get_role(roleIDs["BIRTHDAY_ROLE"])
     if not birthdayRole:
         return
 
