@@ -8,7 +8,8 @@ from config import embedColor
 
 from modules.family.db.check_Parent import check_parent
 from modules.family.db.check_Children import check_children
-from modules.family.db.set_Child import set_child
+from modules.family.db.set_Child import set_child_adoption as set_child
+from modules.family.db.set_Parent import set_parent
 
 @commands.command()
 async def adopt(ctx, member: discord.Member = None):
@@ -97,6 +98,7 @@ async def adopt(ctx, member: discord.Member = None):
             # Update the database to set the parent-child relationship
             try:
                 await set_child(author_id, target_id, adoption_slot)
+                await set_parent(author_id, target_id)
                 embed = Embed(
                                 title="Adoption Accepted",
                                 description=f"Welcome to the family, <@{target_id}>! You are now the child of <@{author_id}>.",
