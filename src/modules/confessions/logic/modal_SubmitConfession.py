@@ -1,12 +1,17 @@
 import discord
+import asyncio
 
 from discord import Embed, ButtonStyle, TextStyle
 from discord.ui import Modal, TextInput, Button, View
 
 from modules.confessions.db.set_Persistence import set_ConfessionPersistence
 
+from modules.confessions.logic.random_CreateConfessionID import GenerateConfessionID
+from modules.confessions.logic.dpy_CreateConfessionThread import create_ConfessionThread
+
 from config import embedColor, channelIDs
 
+global newthread
 
 async def sendConfessionModalMessage(bot):
     channel = bot.get_channel(channelIDs["CONFESSIONS_CHANNEL"]) or await bot.fetch_channel(channelIDs["CONFESSIONS_CHANNEL"])
@@ -58,14 +63,24 @@ async def confessionButtonCallback(interaction: discord.Interaction):
         if not confession_channel:
             return
 
+        confession_id = await GenerateConfessionID()
+
         # Post the confession embed
         confession_embed = Embed(
-            title="Anonymous Confession",
+            title=f"Anonymous Confession #{confession_id}",
             description=confession_input.value,
             color=embedColor["CONFESSION"]
         )
-        await confession_channel.send(embed=confession_embed)
+        embed_footer_text = f"Confession ID: {confession_id}"
+        confession_embed.set_footer(text=embed_footer_text)
 
+        sentmsg = await confession_channel.send(embed=confession_embed)
+
+        await create_ConfessionThread(
+            message=sentmsg, 
+            threadName=f"Discussion Thread for Confession #{confession_id}"
+        )
+        
         # Delete the previous sticky message (the one clicked)
         try:
             await interaction.message.delete()
