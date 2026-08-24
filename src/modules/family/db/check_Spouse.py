@@ -11,6 +11,7 @@ async def check_spouse(user_id):
             )
 
             result = await cursor.fetchone()
+            await connection.commit()
 
             spouses = [result[0], result[1]] if result else []
 

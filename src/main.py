@@ -126,19 +126,19 @@ async def setup_hook():
     ## Family Commands
     ### Family Edit Commands
     #### Adopt Command
-    from modules.family.commands.command_Adopt import adopt
+    from modules.family.commands.family_edit.command_Adopt import adopt
     bot.add_command(adopt)
     #### Marry Command
-    from modules.family.commands.command_Marry import marry
+    from modules.family.commands.family_edit.command_Marry import marry
     bot.add_command(marry)
     #### Runaway Command
-    from modules.family.commands.command_Runaway import runaway
+    from modules.family.commands.family_edit.command_Runaway import runaway
     bot.add_command(runaway)
     #### Divorce Command
-    from modules.family.commands.command_Divorce import divorce
+    from modules.family.commands.family_edit.command_Divorce import divorce
     bot.add_command(divorce)
     #### Disown Command
-    from modules.family.commands.command_Disown import disown
+    from modules.family.commands.family_edit.command_Disown import disown
     bot.add_command(disown)
 
     # View Registration

@@ -32,6 +32,7 @@ async def disown(ctx):
         description="Please select the child you want to disown from the dropdown menu below.",
         color=embedColor["DEFAULT"]
         )
+    embed.set_footer(text=f".disown")
 
     disownSelectionView = View()
 
@@ -39,7 +40,7 @@ async def disown(ctx):
         placeholder="Select a child to disown",
         options=[
             discord.SelectOption(
-                label=await ctx.bot.fetch_user(child_id).name, value=str(child_id)
+                label = (await ctx.bot.fetch_user(child_id)).name, value=str(child_id)
                 ) 
                 for child_id in childslist if child_id is not None
                 ]

@@ -31,6 +31,7 @@ async def divorce(ctx):
         description="Please select the spouse you want to divorce from the dropdown menu below.",
         color=embedColor["DEFAULT"]
         )
+    divorceSelectionEmbed.set_footer(text=f".divorce")
 
     divorceSelectionView = View()
 
@@ -38,13 +39,11 @@ async def divorce(ctx):
         placeholder="Select a spouse to divorce",
         options=[
             discord.SelectOption(
-                label=await ctx.bot.fetch_user(spouse_id).name, value=str(spouse_id)
+                label = (await ctx.bot.fetch_user(spouse_id)).name, value=str(spouse_id)
                 ) 
                 for spouse_id in spouseslist if spouse_id is not None
                 ]
     )
-
-    divorceSelectionDropdown.callback = divorceSelectionCallback
 
     async def divorceSelectionCallback(interaction):
         if interaction.user.id != author_id:
@@ -114,5 +113,8 @@ async def divorce(ctx):
 
         await interaction.response.edit_message(embed=divorceConfirmationEmbed, view=divorceConfirmationView)
 
+    divorceSelectionDropdown.callback = divorceSelectionCallback
+
     divorceSelectionView.add_item(divorceSelectionDropdown)
-    await ctx.send_message(embed=divorceSelectionEmbed, view=divorceSelectionView)
+
+    await ctx.send(embed=divorceSelectionEmbed, view=divorceSelectionView)

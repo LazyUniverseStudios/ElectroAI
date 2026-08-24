@@ -15,19 +15,21 @@ from modules.family.db.set_Parent import set_parent
 async def adopt(ctx, member: discord.Member = None):
     if member is None:
         embed = Embed(
-            title="Error",
+            title="Error: No Member Provided",
             description="Please specify a member to adopt.",
             color=embedColor["ERROR"]
         )
+        embed.set_footer(text=f".adopt")
         await ctx.send(embed=embed)
         return
 
     if member == ctx.author:
         embed = Embed(
-            title="Error",
+            title="Error: Target cannot be Self",
             description="You cannot adopt yourself.",
             color=embedColor["ERROR"]
         )
+        embed.set_footer(text=f".adopt")
         await ctx.send(embed=embed)
         return
 
@@ -39,18 +41,20 @@ async def adopt(ctx, member: discord.Member = None):
     if parent[0] == True:
         if parent[1] == author_id:
             embed = Embed(
-                title="Error",
+                title="Error: Already Parent of Target",
                 description=f"You are already the parent of {member.mention}.",
                 color=embedColor["ERROR"]
             )
+            embed.set_footer(text=f".adopt")
             await ctx.send(embed=embed)
             return
         else:
             embed = Embed(
-                title="Error",
+                title="Error: Target Already Has a Parent",
                 description=f"{member.mention} already has a parent.",
                 color=embedColor["ERROR"]
             )
+            embed.set_footer(text=f".adopt")
             await ctx.send(embed=embed)
             return
 
@@ -63,10 +67,11 @@ async def adopt(ctx, member: discord.Member = None):
 
     if children_count >= 6:
         embed = Embed(
-            title="Error",
+            title="Error: Maximum Children Reached",
             description="You cannot adopt more than 6 children.",
             color=embedColor["ERROR"]
         )
+        embed.set_footer(text=f".adopt")
         await ctx.send(embed=embed)
         return
 
@@ -108,7 +113,7 @@ async def adopt(ctx, member: discord.Member = None):
             except Exception as e:
                 print(f"Error occurred while setting child: {e}")
                 embed = Embed(
-                    title="Error",
+                    title="Error: Unable to Reach Database",
                     description="An error occurred while processing the adoption. Please try again later.",
                     color=embedColor["ERROR"]
                 )

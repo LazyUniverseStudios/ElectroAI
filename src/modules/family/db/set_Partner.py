@@ -28,3 +28,4 @@ async def set_partner_divorce(partnerA_id, partnerB_id):
                     Partner2ID = IF(Partner2ID = %s, NULL, Partner2ID)
                 WHERE UserID = %s""",
                 (partnerB_id, partnerB_id, partnerA_id))
+            await connection.commit()
