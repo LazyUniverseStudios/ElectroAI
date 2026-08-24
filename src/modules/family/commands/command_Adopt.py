@@ -104,7 +104,7 @@ async def adopt(ctx, member: discord.Member = None):
                                 description=f"Welcome to the family, <@{target_id}>! You are now the child of <@{author_id}>.",
                                 color=embedColor["SUCCESS"]
                             )
-                await interaction.response.send_message(embed=embed, view=None)
+                await interaction.response.edit_message(embed=embed, view=None)
             except Exception as e:
                 print(f"Error occurred while setting child: {e}")
                 embed = Embed(
@@ -112,7 +112,7 @@ async def adopt(ctx, member: discord.Member = None):
                     description="An error occurred while processing the adoption. Please try again later.",
                     color=embedColor["ERROR"]
                 )
-                await interaction.response.send_message(embed=embed, view=None)
+                await interaction.response.edit_message(embed=embed, view=None)
 
         async def adoptionStage2DeclineCallback(interaction):
             if interaction.user.id != target_id:
@@ -124,7 +124,7 @@ async def adopt(ctx, member: discord.Member = None):
                 description=f"Sorry <@{author_id}>, <@{target_id}> has declined your adoption request.",
                 color=embedColor["ERROR"]
             )
-            await interaction.response.send_message(embed=embed, view=None)
+            await interaction.response.edit_message(embed=embed, view=None)
 
         adoptionStage2View = View()
 
@@ -137,7 +137,7 @@ async def adopt(ctx, member: discord.Member = None):
         adoptionStage2View.add_item(adoptionStage2AcceptButton)
         adoptionStage2View.add_item(adoptionStage2DeclineButton)
 
-        await interaction.response.send_message(embed=adoptionStage2Embed, view=adoptionStage2View)
+        await interaction.response.edit_message(embed=adoptionStage2Embed, view=adoptionStage2View)
 
 
     async def adoptionStage1CancelCallback(interaction):
@@ -150,7 +150,7 @@ async def adopt(ctx, member: discord.Member = None):
             description=f"You have cancelled the adoption of {member.mention}.",
             color=embedColor["ERROR"]
         )
-        await interaction.response.send_message(embed=adoptionStage1CancelEmbed, view=None)
+        await interaction.response.edit_message(embed=adoptionStage1CancelEmbed, view=None)
 
     adoptionStage1ConfirmButton = Button(label="Confirm", style=ButtonStyle.green)
     adoptionStage1ConfirmButton.callback = adoptionStage1ConfirmCallback

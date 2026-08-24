@@ -1,14 +1,16 @@
 import db_connection
 
 async def check_parent(user_id):
-    connection = db_connection.get_connection()
-    cursor = connection.cursor()
+    async with db_connection._ActivePool.acquire() as connection:
+        async with connection.cursor() as cursor:
+            await cursor.execute("SELECT ParentID FROM Family WHERE UserID = %s", (user_id,))
+            result = await cursor.fetchone()
 
-    cursor.execute("SELECT ParentID FROM Family WHERE UserID = %s", (user_id,))
-    result = cursor.fetchone()
-
-    if result:
-        parent_id = result[0]
-        return [True, parent_id]
-    else:
-        return [False, None]
+            if result is not None:
+                parent_id = result[0]
+                if parent_id is not None:
+                    return True, parent_id
+                else:
+                    return False, None
+            else:
+                return False, None

@@ -7,7 +7,7 @@ async def set_partner_marry(partnerA_id, partnerB_id, slot):
                 UPDATE Family
                 SET Partner{slot}ID = %s
                 WHERE UserID = %s""", 
-                (partnerA_id, partnerB_id)
+                (partnerB_id, partnerA_id)
             )
             await connection.commit()
 

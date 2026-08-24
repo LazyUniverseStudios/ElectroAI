@@ -118,10 +118,21 @@ async def setup_hook():
     bot.add_command(rules_embed)
 
 
-    # Confessions Commands
+    ## Confessions Commands
     from modules.confessions.commands.comamnd_InitializeConfessions import init_confessions
     bot.add_command(init_confessions)
 
+
+    ## Family Commands
+    ### Adopt Command
+    from modules.family.commands.command_Adopt import adopt
+    bot.add_command(adopt)
+    ### Marry Command
+    from modules.family.commands.command_Marry import marry
+    bot.add_command(marry)
+    ### Runaway Command
+    from modules.family.commands.command_Runaway import runaway
+    bot.add_command(runaway)
 
     # View Registration
     persistentView = View(timeout=None)

@@ -6,8 +6,8 @@ from discord.ui import Button, View
 
 from config import embedColor
 
-from src.modules.family.db.check_Spouse import check_spouse
-from src.modules.family.db.set_Partner import set_partner_marry as set_partner
+from modules.family.db.check_Spouse import check_spouse
+from modules.family.db.set_Partner import set_partner_marry as set_partner
 
 @commands.command()
 async def marry(ctx, member: discord.Member = None):
@@ -44,6 +44,7 @@ async def marry(ctx, member: discord.Member = None):
             )
             await ctx.send(embed=embed)
             return
+
     if target_spouses:
         if author_id in target_spouses:
             embed = Embed(
@@ -54,26 +55,31 @@ async def marry(ctx, member: discord.Member = None):
             await ctx.send(embed=embed)
             return
 
-    if len(author_spouses) >= 2:
+    # Count active spouses
+    author_count = sum(1 for s in author_spouses if s is not None)
+    target_count = sum(1 for s in target_spouses if s is not None)
+
+    if author_count >= 2:
         embed = Embed(
             title="Error",
             description="You cannot marry more than 2 people.",
-            color=embedColor["ERROR"]
+            color=embedColor["ERROR"],
         )
         await ctx.send(embed=embed)
         return
 
-    if len(target_spouses) >= 2:
+    if target_count >= 2:
         embed = Embed(
             title="Error",
             description=f"<@{target_id}> already has 2 partners!",
-            color=embedColor["ERROR"]
+            color=embedColor["ERROR"],
         )
         await ctx.send(embed=embed)
         return
 
-    author_slot = 1 if author_spouses[0] is None else 2
-    target_slot = 1 if target_spouses[0] is None else 2
+    # Find the first available empty slot (1 or 2)
+    author_slot = author_spouses.index(None) + 1
+    target_slot = target_spouses.index(None) + 1
 
     marryConfirmationEmbed = Embed(
         title="Marriage",
@@ -127,14 +133,14 @@ async def marry(ctx, member: discord.Member = None):
                     description=f"<@{author_id}> and <@{target_id}> are now married!",
                     color=embedColor["SUCCESS"]
                 )
-                await interaction.response.send_message(embed=embed, view=None)
+                await interaction.response.edit_message(embed=embed, view=None)
             except Exception as e:
                 embed = Embed(
                     title="Error",
                     description="An error occurred while processing the marriage. Please try again later.",
                     color=embedColor["ERROR"]
                 )
-                await interaction.response.send_message(embed=embed, view=None)
+                await interaction.response.edit_message(embed=embed, view=None)
                 return
 
         async def marryConfirmationPt2DeclineCallback(interaction):
@@ -147,7 +153,7 @@ async def marry(ctx, member: discord.Member = None):
                 description=f"Sorry <@{author_id}>, <@{target_id}> has declined your marriage proposal.",
                 color=embedColor["ERROR"]
             )
-            await interaction.response.send_message(embed=embed, view=None)
+            await interaction.response.edit_message(embed=embed, view=None)
 
         marryConfirmationPt2AcceptButton.callback = marryConfirmationPt2AcceptCallback
         marryConfirmationPt2DeclineButton.callback = marryConfirmationPt2DeclineCallback
@@ -155,7 +161,7 @@ async def marry(ctx, member: discord.Member = None):
         marryConfirmationPt2View.add_item(marryConfirmationPt2AcceptButton)
         marryConfirmationPt2View.add_item(marryConfirmationPt2DeclineButton)
 
-        await interaction.response.send_message(embed=marryConfirmationPt2Embed, view=marryConfirmationPt2View)
+        await interaction.response.edit_message(embed=marryConfirmationPt2Embed, view=marryConfirmationPt2View)
 
     async def marryConfirmationDeclineCallback(interaction):
         if interaction.user.id != author_id:
@@ -167,7 +173,7 @@ async def marry(ctx, member: discord.Member = None):
             description="You have cancelled your marriage proposal.",
             color=embedColor["ERROR"]
         )
-        await interaction.response.send_message(embed=embed, view=None)
+        await interaction.response.edit_message(embed=embed, view=None)
 
     marryConfirmationAcceptButton.callback = marryConfirmationAcceptCallback
     marryconfirmationDeclineButton.callback = marryConfirmationDeclineCallback
