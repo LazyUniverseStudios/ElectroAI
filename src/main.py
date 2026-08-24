@@ -124,15 +124,22 @@ async def setup_hook():
 
 
     ## Family Commands
-    ### Adopt Command
+    ### Family Edit Commands
+    #### Adopt Command
     from modules.family.commands.command_Adopt import adopt
     bot.add_command(adopt)
-    ### Marry Command
+    #### Marry Command
     from modules.family.commands.command_Marry import marry
     bot.add_command(marry)
-    ### Runaway Command
+    #### Runaway Command
     from modules.family.commands.command_Runaway import runaway
     bot.add_command(runaway)
+    #### Divorce Command
+    from modules.family.commands.command_Divorce import divorce
+    bot.add_command(divorce)
+    #### Disown Command
+    from modules.family.commands.command_Disown import disown
+    bot.add_command(disown)
 
     # View Registration
     persistentView = View(timeout=None)
