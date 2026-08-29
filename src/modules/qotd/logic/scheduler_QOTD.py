@@ -18,4 +18,5 @@ async def qotd(bot):
     )
     embed.set_footer(text=f"Question ID: {question_key}")
 
-    await channel.send(embed=embed, content=pingRole.mention)
+    message = await channel.send(embed=embed, content=pingRole.mention)
+    await message.create_thread(name=f"QOTD - {question_key}", auto_archive_duration=1440, reason="QOTD Thread")

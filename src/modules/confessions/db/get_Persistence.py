@@ -1,5 +1,7 @@
 import db_connection
 
+from config import channelIDs
+
 from modules.confessions.logic.modal_SubmitConfession import sendConfessionModalMessage
 
 async def getConfessionPersistence(bot):
@@ -10,7 +12,8 @@ async def getConfessionPersistence(bot):
 
     if result:
         message_id = result[0]
-        message = await bot.fetch_message(message_id)  # Fetch the message using the bot instance
+        channel = channelIDs["CONFESSION_CHANNEL"]
+        message = await channel.fetch_message(message_id)  # Fetch the message using the bot instance
         if message:
             return [True, message]
         else:
