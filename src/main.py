@@ -92,6 +92,9 @@ async def setup_hook():
     #### Ping Command
     from modules.misc.commands.user.command_Ping import ping
     bot.add_command(ping)
+    #### Sudo Command
+    from modules.misc.commands.user.command_Sudo import sudo
+    bot.add_command(sudo)
 
     ### Admin Commands
     #### Restart Command
@@ -100,6 +103,9 @@ async def setup_hook():
     #### Ghost Ping Command
     from modules.misc.commands.admin.command_GhostPing import ghost_ping
     bot.add_command(ghost_ping)
+    #### Chat Revive Command
+    from modules.misc.commands.admin.command_ChatRevive import chatrevive
+    bot.add_command(chatrevive)
 
 
     ## Birthday Commands
@@ -140,6 +146,20 @@ async def setup_hook():
     #### Disown Command
     from modules.family.commands.family_edit.command_Disown import disown
     bot.add_command(disown)
+    #### Make Parent Command
+    from modules.family.commands.family_edit.command_MakeParent import makeparent
+    bot.add_command(makeparent)
+
+    ### Family View Commands
+    #### Partners Command
+    from modules.family.commands.command_Partners import partners
+    bot.add_command(partners)
+    #### Children Command
+    from modules.family.commands.command_Children import children
+    bot.add_command(children)
+    #### Parents Command
+    from modules.family.commands.command_Parent import parents
+    bot.add_command(parents)
 
     # View Registration
     persistentView = View(timeout=None)
@@ -170,6 +190,8 @@ async def on_ready():
     # Outputs the bot's username and ID to the console
     print(f'Logged in as {bot.user.name} (ID: {bot.user.id})')
     print('------')
+    game = discord.Game("ElectroAI | .help")
+    await bot.change_presence(status=discord.Status.online, activity=game)
 
     # Iterates through all members, and inserting them into the database's Users table if they don't already exist.
     # This ensures that all members are accounted for in the database, even if they joined while the bot was offline.
