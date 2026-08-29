@@ -18,14 +18,18 @@ async def set_partner_divorce(partnerA_id, partnerB_id):
                 UPDATE Family
                 SET 
                     Partner1ID = IF(Partner1ID = %s, NULL, Partner1ID),
-                    Partner2ID = IF(Partner2ID = %s, NULL, Partner2ID)
+                    Partner2ID = IF(Partner2ID = %s, NULL, Partner2ID),
+                    Partner3ID = IF(Partner3ID = %s, NULL, Partner3ID),
+                    Partner4ID = IF(Partner4ID = %s, NULL, Partner4ID)
                 WHERE UserID = %s""",
-                (partnerA_id, partnerA_id, partnerB_id))
+                (partnerA_id, partnerA_id, partnerA_id, partnerA_id, partnerB_id))
             await cursor.execute("""
                 UPDATE Family
                 SET 
                     Partner1ID = IF(Partner1ID = %s, NULL, Partner1ID),
-                    Partner2ID = IF(Partner2ID = %s, NULL, Partner2ID)
+                    Partner2ID = IF(Partner2ID = %s, NULL, Partner2ID),
+                    Partner3ID = IF(Partner3ID = %s, NULL, Partner3ID),
+                    Partner4ID = IF(Partner4ID = %s, NULL, Partner4ID)
                 WHERE UserID = %s""",
-                (partnerB_id, partnerB_id, partnerA_id))
+                (partnerB_id, partnerB_id, partnerB_id, partnerB_id, partnerA_id))
             await connection.commit()

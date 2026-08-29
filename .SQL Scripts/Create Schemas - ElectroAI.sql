@@ -80,6 +80,8 @@ CREATE TABLE IF NOT EXISTS `ElectroAI`.`Family` (
     `ParentID` BIGINT UNSIGNED NULL DEFAULT NULL,
     `Partner1ID` BIGINT UNSIGNED NULL DEFAULT NULL,
     `Partner2ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Partner3ID` BIGINT UNSIGNED NULL DEFAULT NULL,
+    `Partner4ID` BIGINT UNSIGNED NULL DEFAULT NULL,
     `Child1ID` BIGINT UNSIGNED NULL DEFAULT NULL,
     `Child2ID` BIGINT UNSIGNED NULL DEFAULT NULL,
     `Child3ID` BIGINT UNSIGNED NULL DEFAULT NULL,
@@ -105,6 +107,14 @@ CREATE TABLE IF NOT EXISTS `ElectroAI`.`Family` (
         ON DELETE SET NULL,
     CONSTRAINT `fk_family_partner2` 
         FOREIGN KEY (`Partner2ID`) 
+        REFERENCES `ElectroAI`.`Users` (`UserID`) 
+        ON DELETE SET NULL,
+    CONSTRAINT `fk_family_partner3` 
+        FOREIGN KEY (`Partner3ID`)
+        REFERENCES `ElectroAI`.`Users` (`UserID`)
+        ON DELETE SET NULL,
+    CONSTRAINT `fk_family_partner4`
+        FOREIGN KEY (`Partner4ID`) 
         REFERENCES `ElectroAI`.`Users` (`UserID`) 
         ON DELETE SET NULL,
 

@@ -59,25 +59,25 @@ async def marry(ctx, member: discord.Member = None):
     author_count = sum(1 for s in author_spouses if s is not None)
     target_count = sum(1 for s in target_spouses if s is not None)
 
-    if author_count >= 2:
+    if author_count >= 4:
         embed = Embed(
             title="Error",
-            description="You cannot marry more than 2 people.",
+            description="You cannot marry more than 4 people.",
             color=embedColor["ERROR"],
         )
         await ctx.send(embed=embed)
         return
 
-    if target_count >= 2:
+    if target_count >= 4:
         embed = Embed(
             title="Error",
-            description=f"<@{target_id}> already has 2 partners!",
+            description=f"<@{target_id}> already has 4 partners!",
             color=embedColor["ERROR"],
         )
         await ctx.send(embed=embed)
         return
 
-    # Find the first available empty slot (1 or 2)
+    # Find the first available empty slot (1, 2, 3, or 4)
     author_slot = author_spouses.index(None) + 1
     target_slot = target_spouses.index(None) + 1
 

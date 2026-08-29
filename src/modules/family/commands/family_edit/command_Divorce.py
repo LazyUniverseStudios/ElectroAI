@@ -17,7 +17,7 @@ async def divorce(ctx):
 
     emptySlots = sum(1 for s in spouseslist if s is None)
 
-    if emptySlots >= 2:
+    if emptySlots >= 4:
         embed = Embed(
             title="Error",
             description="You are not married to anyone.",
