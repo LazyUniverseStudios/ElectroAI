@@ -41,4 +41,4 @@ async def sudo(ctx, target: Optional[discord.Member] = None, *, message: str = N
     if webhook is None:
         webhook = await channel.create_webhook(name="SudoWebhook")
 
-    await webhook.send(message, username=target.display_name, avatar_url=target.avatar.url if target.avatar else None)
+    await webhook.send(message, username=target.display_name, avatar_url=target.display_avatar.url if target.avatar else None)
