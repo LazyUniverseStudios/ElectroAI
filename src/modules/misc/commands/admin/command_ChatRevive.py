@@ -5,7 +5,7 @@ from discord.ext import commands
 
 from config import embedColor, roleIDs
 
-@commands.command(name="chatrevive", aliases=["cr, reviveping"])
+@commands.command(name="chatrevive", aliases=["cr", "reviveping"])
 async def chatrevive(ctx):
     if roleIDs["STAFF_ROLES"]["HEAD_ADMIN"] not in [role.id for role in ctx.author.roles]:
         embed = Embed(

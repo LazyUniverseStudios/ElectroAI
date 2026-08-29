@@ -24,6 +24,7 @@ async def disown(ctx):
             description="You are not married to anyone.",
             color=embedColor["ERROR"]
         )
+        embed.set_footer(text=f".disown")
         await ctx.send(embed=embed)
         return
 
@@ -32,7 +33,7 @@ async def disown(ctx):
         description="Please select the child you want to disown from the dropdown menu below.",
         color=embedColor["DEFAULT"]
         )
-    embed.set_footer(text=f".disown")
+    disownSelectionEmbed.set_footer(text=f".disown")
 
     disownSelectionView = View()
 

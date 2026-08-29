@@ -12,7 +12,7 @@ from modules.family.db.set_Child import set_child_adoption as set_child
 from modules.family.db.set_Parent import set_parent
 
 @commands.command()
-async def makeparent(ctx, target: discord.Member):
+async def makeparent(ctx, target: discord.Member = None):
     if target is None:
         embed = Embed(
             title="Error: No Member Provided",
