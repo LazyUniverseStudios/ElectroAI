@@ -32,12 +32,12 @@ serverIdentityIDs = {
 channelIDs = {
     "JOINS_CHANNEL": 1459155124089000072, # Joins Channel ID
     "LEAVES_CHANNEL": 1459155124089000072, # Leaves Channel ID
-    "GENERAL_CHAT_CHANNEL": 1480599558642728990, # General Chat Channel ID
+    "GENERAL_CHAT_CHANNEL": 1543684072323424326, # General Chat Channel ID
     "INTRODUCTION_CHANNEL": 1537111461636218910, # Introduction Channel ID
     "BIRTHDAY_CHANNEL": 1523831931710738544, # Birthday Channel ID
     "QOTD_CHANNEL": 1523838557624471625, # Question of the Day Channel ID
     "BOOSTS_CHANNEL": 1427728272560623626, # Boosts Channel ID
-    "CONFESSIONS_CHANNEL": 1540322421071151176, # Confessions Channel ID
+    "CONFESSIONS_CHANNEL": 1543680653487378602, # Confessions Channel ID
 }
 
 # Role IDs
@@ -84,4 +84,35 @@ roleIDs = {
     "GIVEAWAY_PING_ROLE": 1412102063445512282, # Giveaway Ping Role ID
     "QOTD_PING_ROLE": 1412102087663157360, # Question of the Day Ping Role ID
     "CHAT_REVIVE_PING_ROLE": 1412102007283646628, # Chat Ping Role ID
+}
+
+command_Enabled = {
+    "Family Module": True,
+    "Family Commands": {
+        "Admin": {},
+        "User": {
+            "familyEditMarry": True,
+            "familyEditDivorce": True,
+            "familyEditAdopt": True,
+            "familyEditRunaway": True,
+            "familyEditMakeParent": True,
+            "familyEditDisown": True,
+            "familyViewChildren": True,
+            "familyViewParents": True,
+            "familyViewSpouses": True,
+        }
+    },
+    "Misc Module": True,
+    "Misc Commands": {
+        "Admin" : {
+            "Restart": True,
+            "GhostPing": True,
+            "ChatRevive": True
+        },
+        "User" : {
+            "Help": True,
+            "Ping": True,
+            "Sudo": False
+        }
+    }
 }
