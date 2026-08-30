@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `ElectroAI`.`Moderation` (
 
 CREATE TABLE IF NOT EXISTS `ElectroAI`.`Birthdays` (
     `UserID` BIGINT UNSIGNED NOT NULL,
-    `Birthday` TINYINT UNSIGNED,
+    `Birthday` DATE,
 
     PRIMARY KEY (`UserID`),
     CONSTRAINT `fk_birthdays_uid`

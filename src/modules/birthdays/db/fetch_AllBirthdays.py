@@ -10,7 +10,7 @@ async def fetchAllBirthdays():
     async with db_connection._ActivePool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
-                await cursor.execute("SELECT UserID, Birthday FROM birthdays")
+                await cursor.execute("SELECT UserID, Birthday FROM birthdays WHERE Birthday IS NOT NULL")
                 result = await cursor.fetchall()
                 return [(row[0], row[1]) for row in result]
             except Exception as e:
